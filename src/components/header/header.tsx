@@ -1,5 +1,6 @@
 import { Search } from "../search/search";
 import webName from '../../imgs/webName.png'
+import { NavigationBar } from "./navigation-bar";
 
 export const Header = () => {
   return (
@@ -10,7 +11,10 @@ export const Header = () => {
       >
         <img alt="website name" src={webName} className="h-12"/>
       </span>
+      <div className="flex">
+      <NavigationBar />
       <Search />
+      </div>
     </div>
   );
 };

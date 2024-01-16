@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { SearchBar } from "./search-bar";
+import { useNavigate } from "react-router-dom";
 
 export const Search = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   const handleSearch = (e: any): void => {
     e.preventDefault()
-    setSearchTerm(e.target[0].value)
+    navigate('/recipes', { state: { term: e.target[0].value }})
   }
 
   return (
