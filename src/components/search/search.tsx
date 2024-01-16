@@ -4,9 +4,9 @@ import { SearchBar } from "./search-bar";
 export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  console.log(searchTerm)
   const handleSearch = (e: any): void => {
-    setSearchTerm(e.target)
+    e.preventDefault()
+    setSearchTerm(e.target[0].value)
   }
 
   return (
