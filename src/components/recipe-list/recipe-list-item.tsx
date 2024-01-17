@@ -1,20 +1,31 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface RecipeListItemProps {
-    image: string
-    title: string
-    timeToCook: number
+  id: number;
+  image: string;
+  title: string;
+  timeToCook: number;
 }
 
-export const RecipeListItem: FC<RecipeListItemProps> = ({ image, title, timeToCook }) => {
+export const RecipeListItem: FC<RecipeListItemProps> = ({
+  id,
+  image,
+  title,
+  timeToCook,
+}) => {
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate(`/recipes/${id}`, { state: { id: id } });
+  };
+
   return (
-    <div className="py-4">
+    <div onClick={handleOnClick} className="py-4">
       <img alt="recipe-thumbnail" src={image} />
-      <h3 className="font-bold">
-         {title}
-      </h3>
+      <h3 className="font-bold">{title}</h3>
       <p>
-        <span className="font-bold">Ready in:</span> {timeToCook}
+        <span className="font-bold">Ready in:</span> {timeToCook} minutes
       </p>
     </div>
   );

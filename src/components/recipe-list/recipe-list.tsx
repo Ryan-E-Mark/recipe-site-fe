@@ -1,21 +1,19 @@
 import { useLocation } from "react-router-dom";
 import { RecipeListItem } from "./recipe-list-item";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 type SearchResults =
-  | [
-      {
-        id: number;
-        title: string;
-        readyInMinutes: number;
-        image: string;
-        imageUrls: string[];
-      }
-    ]
+  | {
+      id: number;
+      title: string;
+      readyInMinutes: number;
+      image: string;
+      imageUrls: string[];
+    }[]
   | [];
 
-const BASE_URL = "https://spoonacular.com/recipeImages/"
+const BASE_IMAGE_URL = "https://spoonacular.com/recipeImages/";
 
 export const RecipeList = () => {
   const searchTerm = useLocation().state.term;
@@ -42,34 +40,36 @@ export const RecipeList = () => {
       },
     };
   }, [searchTerm]);
+  
+  const fetchRecipes = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.request(options);
+      setSearchResults(response.data.results);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [options]);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.request(options);
-        setSearchResults(response.data.results);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     if (searchTerm) {
       fetchRecipes();
     }
-  }, [searchTerm, options]);
+  }, [searchTerm, options, fetchRecipes]);
 
   return (
     <div className="w-60 flex flex-wrap flex-col justify-center content-center h-50 overflow-y-scroll">
       <h2>Results for "{searchTerm}"</h2>
       {!isLoading &&
         searchResults?.length > 0 &&
-        searchResults?.map((recipe, idx) => {
-            const imgUrl = `${BASE_URL}${recipe.image}`
+        searchResults?.map(recipe => {
+          const imgUrl = `${BASE_IMAGE_URL}${recipe.image}`;
           return (
-            <div key={idx}>
+            <div key={recipe.id}>
               <RecipeListItem
+                id={recipe.id}
                 image={imgUrl}
                 title={recipe.title}
                 timeToCook={recipe.readyInMinutes}
