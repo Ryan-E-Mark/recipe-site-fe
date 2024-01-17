@@ -4,6 +4,8 @@ import { HomePage } from './pages/home-page'
 import { RecipeResults } from './pages/recipe-results'
 import { IndividualRecipeDetails } from './pages/individual-recipe-details'
 import { Header } from './components/header/header'
+import { RandomRecipes } from './pages/random-recipes'
+import { SearchByIngredients } from './pages/search-by-ingredient'
 
 export const App = () => {
   return (
@@ -13,6 +15,8 @@ export const App = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/recipes' element={<RecipeResults />} />
           <Route path='/recipes/:recipeId' element={<IndividualRecipeDetails />} />
+          <Route path='/random-recipe' element={<RandomRecipes />} />
+          <Route path='/recipe-by-ingredient' element={<SearchByIngredients />} />
         </Routes>
       </BrowserRouter>
   )
