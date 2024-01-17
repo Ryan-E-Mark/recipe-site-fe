@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { RecipeListItem } from "./recipe-list-item";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { Oval } from "react-loader-spinner";
 
 type SearchResults =
   | {
@@ -40,7 +41,7 @@ export const RecipeList = () => {
       },
     };
   }, [searchTerm]);
-  
+
   const fetchRecipes = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -55,16 +56,21 @@ export const RecipeList = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      fetchRecipes();
+      // fetchRecipes();
     }
   }, [searchTerm, options, fetchRecipes]);
 
   return (
-    <div className="w-60 flex flex-wrap flex-col justify-center content-center h-50 overflow-y-scroll">
+    <div className="w-full h-full flex flex-wrap flex-col justify-center content-center ">
+      {true && (
+        <div className="flex justify-center">
+          <Oval height="60" width="60" />
+        </div>
+      )}
       <h2>Results for "{searchTerm}"</h2>
-      {!isLoading &&
+      {!true &&
         searchResults?.length > 0 &&
-        searchResults?.map(recipe => {
+        searchResults?.map((recipe) => {
           const imgUrl = `${BASE_IMAGE_URL}${recipe.image}`;
           return (
             <div key={recipe.id}>
