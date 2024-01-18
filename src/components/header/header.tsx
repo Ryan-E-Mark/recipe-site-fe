@@ -4,7 +4,7 @@ import { SearchBar } from "../search/search-bar";
 
 export const Header = () => {
   return (
-    <div className="flex flex-row justify-between flex-wrap h-full px-4">
+    <div className="flex flex-row justify-between flex-wrap h-full px-4 border-b-2 border-red-200">
       <span>
         <img alt="website name" src={webName} className="h-12" />
       </span>

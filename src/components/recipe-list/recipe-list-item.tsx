@@ -17,16 +17,26 @@ export const RecipeListItem: FC<RecipeListItemProps> = ({
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/recipes/${id}`, { state: { id: id } });
+    // navigate(`/recipes/${id}`, { state: { id: id } });
   };
 
   return (
-    <div onClick={handleOnClick} className="py-4">
-      <img alt="recipe-thumbnail" src={image} />
-      <h3 className="font-bold">{title}</h3>
-      <p>
+    <div className="border-2 border-red-200 rounded-lg flex flex-col flex-wrap justify-start">
+      <img
+        alt="recipe-thumbnail"
+        src={image}
+        className="w-full h-1/2 rounded-lg"
+      />
+      <h3 className="font-bold ">{title}</h3>
+      <p className="">
         <span className="font-bold">Ready in:</span> {timeToCook} minutes
       </p>
+      <button
+        onClick={handleOnClick}
+        className="w-1/2 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full"
+      >
+        Get the recipe
+      </button>
     </div>
   );
 };

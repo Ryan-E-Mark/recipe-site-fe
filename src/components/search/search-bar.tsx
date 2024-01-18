@@ -11,13 +11,14 @@ export const SearchBar: FC = () => {
   }
 
   return (
-    <div className="w-auto flex flex-wrap content-center">
+    <div className="w-auto flex flex-wrap content-center border rounded-lg h-3/4">
       <form onSubmit={handleSearch} className="border-gray-500">
         <input
-          type="search"
+          type="text"
           id="search-bar"
           name="search"
           placeholder="Search recipes..."
+          className="h-full"
         />
       </form>
     </div>
