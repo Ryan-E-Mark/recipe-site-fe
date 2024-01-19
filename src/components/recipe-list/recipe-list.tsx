@@ -30,7 +30,7 @@ export const RecipeList = () => {
         diet: "",
         excludeIngredients: "",
         intolerances: "",
-        number: "10",
+        number: "12",
         offset: "0",
         type: "",
       },
@@ -70,7 +70,7 @@ export const RecipeList = () => {
       {!isLoading && mockedData?.length > 0 && (
         <div className="flex flex-wrap justify-center content-center">
           <h2 className="m-4">Results for "{searchTerm}"</h2>
-          <div className="grid grid-cols-4 gap-4 my-6 mx-2">
+          <div className="grid grid-cols-4 gap-4 my-4 mx-2">
             {mockedData?.map((recipe) => {
               const imgUrl = `${BASE_IMAGE_URL}${recipe.image}`;
               return (

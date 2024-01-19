@@ -17,25 +17,25 @@ export const RecipeListItem: FC<RecipeListItemProps> = ({
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    // navigate(`/recipes/${id}`, { state: { id: id } });
+    navigate(`/recipes/${id}`, { state: { id: id } });
   };
 
   return (
-    <div className="border-2 border-red-200 rounded-lg flex flex-col flex-wrap justify-start">
+    <div className="border border-red-200 rounded-lg flex flex-col flex-wrap gap-y-3 content-center pb-3">
       <img
         alt="recipe-thumbnail"
         src={image}
-        className="w-full h-1/2 rounded-lg"
+        className="w-full h-60 rounded-lg"
       />
-      <h3 className="font-bold ">{title}</h3>
-      <p className="">
+      <p className="font-bold mx-auto text-center px-2">{title}</p>
+      <p className="mx-auto">
         <span className="font-bold">Ready in:</span> {timeToCook} minutes
       </p>
       <button
         onClick={handleOnClick}
-        className="w-1/2 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full"
+        className="w-1/2 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto"
       >
-        Get the recipe
+        View Recipe
       </button>
     </div>
   );
