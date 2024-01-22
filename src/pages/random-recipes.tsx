@@ -21,8 +21,8 @@ export const RandomRecipes = () => {
   };
 
   const handleRandomSearch = async () => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
     //   const response = await axios.request(options);
     //   setSearchResults(response.data.recipes[0]);
     } catch (err) {
