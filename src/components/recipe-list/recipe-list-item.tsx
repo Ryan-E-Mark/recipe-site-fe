@@ -1,49 +1,43 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import spoon from '../../imgs/spoon.png'
+import clock from "../../imgs/clock.png";
 
 interface RecipeListItemProps {
   id: number;
   image: string;
   title: string;
-  nutrition: {
-    name: string;
-    amount: number;
-    unit: string;
-  }[];
+  cookingTime: number;
 }
 
 export const RecipeListItem: FC<RecipeListItemProps> = ({
   id,
   image,
   title,
-  nutrition,
+  cookingTime,
 }) => {
   const navigate = useNavigate();
-
- 
-
-  console.log(nutrition)
 
   const handleOnClick = () => {
     navigate(`/recipes/${id}`, { state: { id: id } });
   };
 
   return (
-    <div className="border border-red-200 shadow-md rounded-lg flex flex-col flex-wrap gap-y-3 content-center pb-3">
-      <img
-        alt="recipe-thumbnail"
-        src={image}
-        className="w-full h-60 rounded-lg"
-      />
-      <p className="font-bold text-lg mx-auto text-center px-2">{title}</p>
-      <div className="flex justify-center bg-gray-200 rounded-full w-3/4">
-        <img alt="spoon&fork" src={spoon} className="w-8 h-8" />
-        <span>Cal - </span>
+    <div className="border border-gray-200 shadow-md rounded-lg flex flex-col flex-wrap pb-3 items-center justify-between gap-y-8">
+      <div className="flex flex-col flex-wrap items-center w-full gap-y-2">
+        <img
+          alt="recipe-thumbnail"
+          src={image}
+          className="w-full h-60 rounded-lg"
+        />
+        <h3 className="font-bold text-lg mx-auto text-center px-2">{title}</h3>
+        <div className="flex justify-center bg-gray-200 rounded-lg w-2/5 gap-x-2">
+          <img alt="spoon&fork" src={clock} className="w-6 h-6 p-1" />
+          <span>- {cookingTime} minutes</span>
+        </div>
       </div>
       <button
         onClick={handleOnClick}
-        className="w-1/2 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto"
+        className="w-1/2 border-2 border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto self-end"
       >
         View Recipe
       </button>
