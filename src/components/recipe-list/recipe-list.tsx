@@ -4,18 +4,28 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { RecipeFilters } from "./recipe-filters";
+import { SearchFilters, SearchResults } from "./types";
 
-type SearchResults = {
-  id: number;
-  image: string;
-  title: string;
-  nutrition: { nutrients: { name: string; amount: number; unit: string }[] };
-}[];
+const initialFilterState = {
+  cuisine: {
+    isDropdownActive: false,
+    filterValues: []
+  },
+  diet: {
+    isDropdownActive: false,
+    filterValues: []
+  },
+  intolerances:  {
+    isDropdownActive: false,
+    filterValues: []
+  },
+}
 
 export const RecipeList = () => {
   const searchTerm = useLocation().state.term;
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchFilters, setSearchFilters] = useState<SearchFilters>(initialFilterState)
 
   const options = useMemo(() => {
     return {
@@ -23,6 +33,9 @@ export const RecipeList = () => {
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
       params: {
         query: searchTerm,
+        cuisine: searchFilters?.cuisine?.filterValues,
+        diet: searchFilters?.diet?.filterValues,
+        intolerances: searchFilters?.intolerances?.filterValues,
         instructionsRequired: "true",
         addRecipeInformation: "true",
         offset: "0",
@@ -35,7 +48,12 @@ export const RecipeList = () => {
           "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       },
     };
-  }, [searchTerm]);
+  }, [searchTerm, searchFilters]);
+
+  const handleFilterApply = (filters: SearchFilters) => {
+    setSearchFilters(filters)
+    // fetchRecipes()
+  }
 
   const fetchRecipes = useCallback(async () => {
     try {
@@ -71,7 +89,7 @@ export const RecipeList = () => {
         <div className="flex flex-wrap justify-center content-center">
           <div className="flex flex-col">
             <h2 className="m-4">Results for "{searchTerm}"</h2>
-            <RecipeFilters />
+            <RecipeFilters handleApply={handleFilterApply}/>
           </div>
           <div className="grid grid-cols-4 gap-8 my-4 mx-4">
             {mockedData?.map((recipe) => {

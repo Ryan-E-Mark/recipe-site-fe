@@ -37,7 +37,7 @@ export const RecipeListItem: FC<RecipeListItemProps> = ({
       </div>
       <button
         onClick={handleOnClick}
-        className="w-1/2 border-2 border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto self-end"
+        className="w-1/2 border-2 border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto"
       >
         View Recipe
       </button>
