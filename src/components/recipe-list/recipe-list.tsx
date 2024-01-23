@@ -40,7 +40,7 @@ export const RecipeList = () => {
         ranking: "2",
       },
       headers: {
-        "X-RapidAPI-Key": '84db66e0e3msh7bae98aeb1c8530p1be287jsn05741f213ed7',
+        "X-RapidAPI-Key": process.env.REACT_APP_RECIPE_SEARCH_API_KEY,
         "X-RapidAPI-Host":
           "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       },
@@ -61,7 +61,7 @@ export const RecipeList = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      // fetchRecipes();
+      fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
@@ -77,14 +77,14 @@ export const RecipeList = () => {
           />
         </div>
       )}
-      {!isLoading && mockedData?.length > 0 && (
+      {!isLoading && searchResults?.length > 0 && (
         <div className="flex flex-wrap justify-center content-center">
           <div className="flex flex-col">
           <h2 className="m-4">Results for "{searchTerm}"</h2>
           <RecipeFilters />
           </div>
           <div className="grid grid-cols-4 gap-8 my-4 mx-4">
-            {mockedData?.map((recipe) => {
+            {searchResults?.map((recipe) => {
               return (
                 <RecipeListItem
                   id={recipe.id}
