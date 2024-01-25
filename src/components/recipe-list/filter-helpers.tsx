@@ -1,0 +1,48 @@
+export const CUISINE_FILTERS = {
+    african: "african",
+    chinese: "chinese",
+    japanese: "japanese",
+    korean: "korean",
+    vietnamese: "vietnamese",
+    thai: "thai",
+    indian: "indian",
+    british: "british",
+    irish: "irish",
+    french: "french",
+    italian: "italian",
+    mexican: "mexican",
+    spanish: "spanish",
+    middleEastern: "middle eastern",
+    jewish: "jewish",
+    american: "american",
+    cajun: "cajun",
+    southern: "southern",
+    greek: "greek",
+    german: "german",
+    nordic: "nordic",
+    easternEuropean: "eastern european",
+    caribbean: "caribbean",
+    latinAmerican: "latin american",
+  };
+  
+  export const DIET_FILTERS = {
+    pescetarian: "pescetarian",
+    vegan: "vegan",
+    vegetarian: "vegetarian",
+    paleo: "paleo",
+    primal: "primal",
+  };
+  
+  export const INTOLERANCES_FILTERS = {
+    dairy: "dairy",
+    egg: "egg",
+    gluten: "gluten",
+    peanut: "peanut",
+    sesame: "sesame",
+    seafood: "seafood",
+    shellfish: "shellfish",
+    soy: "soy",
+    sulfite: "sulfite",
+    treeNut: "tree nut",
+    wheat: "wheat",
+  };

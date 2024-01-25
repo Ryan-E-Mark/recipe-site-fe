@@ -7,18 +7,9 @@ import { RecipeFilters } from "./recipe-filters";
 import { SearchFilters, SearchResults } from "./types";
 
 const initialFilterState = {
-  cuisine: {
-    isDropdownActive: false,
-    filterValues: []
-  },
-  diet: {
-    isDropdownActive: false,
-    filterValues: []
-  },
-  intolerances:  {
-    isDropdownActive: false,
-    filterValues: []
-  },
+  cuisine: [],
+  diet: [],
+  intolerances: [],
 }
 
 export const RecipeList = () => {
@@ -33,9 +24,9 @@ export const RecipeList = () => {
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
       params: {
         query: searchTerm,
-        cuisine: searchFilters?.cuisine?.filterValues,
-        diet: searchFilters?.diet?.filterValues,
-        intolerances: searchFilters?.intolerances?.filterValues,
+        cuisine: searchFilters?.cuisine,
+        diet: searchFilters?.diet,
+        intolerances: searchFilters?.intolerances,
         instructionsRequired: "true",
         addRecipeInformation: "true",
         offset: "0",

@@ -99,7 +99,7 @@ export const IndividualRecipeDetails = () => {
                   {recipeDetails?.readyInMinutes} minutes
                 </p>
               </div>
-              <div className="flex gap-x-28">
+              <div className="flex gap-x-20">
                 <div className="flex flex-wrap flex-col justify-center content-center bg-gray-100 py-6 px-10 rounded-md">
                   <h3 className="font-bold border-b-2 text-xl">Ingredients</h3>
                   {recipeDetails?.extendedIngredients.map((ingr) => {
