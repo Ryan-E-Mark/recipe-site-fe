@@ -79,7 +79,7 @@ export const RecipeList = () => {
       {!isLoading && mockedData?.length > 0 && (
         <div className="flex flex-wrap justify-center content-center">
           <div className="flex flex-col">
-            <h2 className="m-4">Results for "{searchTerm}"</h2>
+            <h2 className="m-4 text-center">Results for "{searchTerm}"</h2>
             <RecipeFilters handleApply={handleFilterApply}/>
           </div>
           <div className="grid grid-cols-4 gap-8 my-4 mx-4">
