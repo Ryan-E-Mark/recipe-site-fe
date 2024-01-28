@@ -83,9 +83,10 @@ export const RecipeList = () => {
             <RecipeFilters handleApply={handleFilterApply}/>
           </div>
           <div className="grid grid-cols-4 gap-8 my-4 mx-4">
-            {mockedData?.map((recipe) => {
+            {mockedData?.map((recipe, idx) => {
               return (
                 <RecipeListItem
+                  key={idx}
                   id={recipe.id}
                   image={recipe.image}
                   title={recipe.title}

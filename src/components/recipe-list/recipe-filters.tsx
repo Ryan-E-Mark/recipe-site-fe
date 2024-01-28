@@ -10,9 +10,9 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
   const [tmpFilters, setTmpFilters] = useState<SearchFilters>();
 
   return (
-    <div className="border-2 border-lime-200 rounded-md flex flex-col items-center">
+    <div className="border-2 border-gray-200 rounded-md flex flex-col items-center">
       <h3>Filter your results</h3>
-      <div className="flex gap-x-4">
+      <div className="flex gap-x-4 align-center">
         <FilterDropdown entity="cuisine" />
         <FilterDropdown entity="diet" />
         <FilterDropdown entity="intolerances" />
