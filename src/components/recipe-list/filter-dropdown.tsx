@@ -46,10 +46,9 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ entity }) => {
 
   return (
     <div className="w-auto">
-      <button onClick={() => handleDropdownClick(entity)} className="w-40 border-2 border-solid border-gray-200 hover:bg-gray-200 text-black font-bold py-2 px-4 rounded-md mx-auto">{entity.toUpperCase()}</button>
-      {isDropdownActive[entity] && (
-        <div className="z-10 w-48 bg-white divide-y divide-grazy-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute">
-            <ul className="overflow-y-scroll h-40">
+      <label onClick={() => handleDropdownClick(entity)} className="">{entity.toUpperCase()}</label>
+        <div className="bg-white rounded-lg shadow dark:bg-gray-700">
+            <ul className="">
           {Object.keys(filtersByEntity).map((filter, idx) => {
             return (
                 <li key={idx} className="w-full border-b rounded-t-lg">
@@ -71,7 +70,6 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ entity }) => {
         <button>Clear</button>
         <button>Apply</button>
         </div>
-      )}
     </div>
   );
 };

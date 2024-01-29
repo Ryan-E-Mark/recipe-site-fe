@@ -12,7 +12,7 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
   return (
     <div className="border-2 border-gray-200 rounded-md flex flex-col items-center">
       <h3>Filter your results</h3>
-      <div className="flex gap-x-4 align-center">
+      <div className="flex-col gap-x-4 align-center">
         <FilterDropdown entity="cuisine" />
         <FilterDropdown entity="diet" />
         <FilterDropdown entity="intolerances" />
