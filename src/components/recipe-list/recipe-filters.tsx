@@ -10,16 +10,16 @@ import {
   DIET_FILTERS,
   INTOLERANCES_FILTERS,
 } from "./filter-helpers";
+import { initialFilterState } from "./recipe-list";
 
 interface SearchFiltersProps {
   handleApply: (filters: SearchFilters) => void;
 }
 
 const filterEntities = ["cuisine", "diet", "intolerances"];
-const initialTemporaryFilterState = { cuisine: [], diet: [], intolerances: []}
 
 export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
-  const [tmpFilters, setTmpFilters] = useState<SearchFilters>(initialTemporaryFilterState);
+  const [tmpFilters, setTmpFilters] = useState<SearchFilters>(initialFilterState);
 
   const filtersByEntity: {
     cuisine: CUISINE_FILTERS_TYPE;
@@ -35,10 +35,10 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
 
 
   const handleClear = () => {
-    setTmpFilters(initialTemporaryFilterState)
+    setTmpFilters(initialFilterState)
   }
 
-  console.log(tmpFilters)
+  // console.log(tmpFilters)
 
   return (
     <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center">
@@ -51,12 +51,14 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
               <div className="bg-white rounded-lg shadow dark:bg-gray-700">
                 <ul className="grid grid-cols-3">
                   {Object.keys(filtersByEntity[entity]).map((filter, idx) => {
+                    const isChecked = !!tmpFilters[entity].includes(filtersByEntity[entity][filter])
+
                     return (
                       <li key={idx} className="w-full rounded-t-lg">
                         <div className="flex items-center ps-3">
                           <input
                             type="checkbox"
-                            
+                            checked={isChecked}
                             value={filtersByEntity[entity][filter]}
                             onChange={() => setTmpFilters({
                               ...tmpFilters,
@@ -79,7 +81,7 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
       </div>
       <div className="w-3/4 flex flex-wrap justify-between">
         <button onClick={handleClear}>Clear</button>
-        <button>Apply</button>
+        <button onClick={() => handleApply(tmpFilters)}>Apply</button>
       </div>
     </div>
   );

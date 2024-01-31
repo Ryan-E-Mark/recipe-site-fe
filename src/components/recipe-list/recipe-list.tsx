@@ -6,7 +6,7 @@ import { Oval } from "react-loader-spinner";
 import { RecipeFilters } from "./recipe-filters";
 import { SearchFilters, SearchResults } from "./types";
 
-const initialFilterState = {
+export const initialFilterState = {
   cuisine: [],
   diet: [],
   intolerances: [],
