@@ -78,7 +78,7 @@ export const RecipeList = () => {
       )}
       {!isLoading && mockedData?.length > 0 && (
         <div className="flex flex-row">
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-10">
             <RecipeFilters handleApply={handleFilterApply}/>
           </div>
           <div className="flex-col">
