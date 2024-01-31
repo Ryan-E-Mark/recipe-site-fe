@@ -19,7 +19,8 @@ interface SearchFiltersProps {
 const filterEntities = ["cuisine", "diet", "intolerances"];
 
 export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
-  const [tmpFilters, setTmpFilters] = useState<SearchFilters>(initialFilterState);
+  const [tmpFilters, setTmpFilters] =
+    useState<SearchFilters>(initialFilterState);
 
   const filtersByEntity: {
     cuisine: CUISINE_FILTERS_TYPE;
@@ -33,10 +34,9 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
     };
   }, []);
 
-
   const handleClear = () => {
-    setTmpFilters(initialFilterState)
-  }
+    setTmpFilters(initialFilterState);
+  };
 
   // console.log(tmpFilters)
 
@@ -51,7 +51,9 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
               <div className="bg-white rounded-lg shadow dark:bg-gray-700">
                 <ul className="grid grid-cols-3">
                   {Object.keys(filtersByEntity[entity]).map((filter, idx) => {
-                    const isChecked = !!tmpFilters[entity].includes(filtersByEntity[entity][filter])
+                    const isChecked = !!tmpFilters[entity].includes(
+                      filtersByEntity[entity][filter]
+                    );
 
                     return (
                       <li key={idx} className="w-full rounded-t-lg">
@@ -60,10 +62,25 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
                             type="checkbox"
                             checked={isChecked}
                             value={filtersByEntity[entity][filter]}
-                            onChange={() => setTmpFilters({
-                              ...tmpFilters,
-                              [entity]: [...tmpFilters[entity], filtersByEntity[entity][filter]]
-                            })}
+                            onChange={() => {
+                              if (!isChecked) {
+                                setTmpFilters({
+                                  ...tmpFilters,
+                                  [entity]: [
+                                    ...tmpFilters[entity],
+                                    filtersByEntity[entity][filter],
+                                  ],
+                                });
+                              } else {
+                                setTmpFilters({
+                                  ...tmpFilters,
+                                  [entity]: tmpFilters[entity].filter(
+                                    (value) =>
+                                      value !== filtersByEntity[entity][filter]
+                                  ),
+                                });
+                              }
+                            }}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label className="w-full py-3 ms-2 text-sm font-medium dark:text-gray-300">
