@@ -38,8 +38,6 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
     setTmpFilters(initialFilterState);
   };
 
-  // console.log(tmpFilters)
-
   return (
     <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center">
       <h3>Filter your results</h3>
@@ -50,10 +48,16 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
               <label className="font-bold">{entity.toUpperCase()}</label>
               <div className="bg-white rounded-lg shadow dark:bg-gray-700">
                 <ul className="grid grid-cols-3">
-                  {Object.keys(filtersByEntity[entity]).map((filter, idx) => {
-                    const isChecked = !!tmpFilters[entity].includes(
-                      filtersByEntity[entity][filter]
-                    );
+                  {Object.keys(
+                    filtersByEntity[entity as keyof typeof filtersByEntity]
+                  ).map((filter, idx) => {
+                    const isChecked = !!tmpFilters[
+                      entity as keyof SearchFilters
+                    ].includes(
+                      filtersByEntity[entity as keyof typeof filtersByEntity][
+                        filter as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE | INTOLERANCES_FILTERS_TYPE)
+                      ]
+                    ); 
 
                     return (
                       <li key={idx} className="w-full rounded-t-lg">
@@ -61,22 +65,32 @@ export const RecipeFilters: FC<SearchFiltersProps> = ({ handleApply }) => {
                           <input
                             type="checkbox"
                             checked={isChecked}
-                            value={filtersByEntity[entity][filter]}
+                            value={
+                              filtersByEntity[
+                                entity as keyof typeof filtersByEntity
+                              ][filter as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE | INTOLERANCES_FILTERS_TYPE)]
+                            }
                             onChange={() => {
                               if (!isChecked) {
                                 setTmpFilters({
                                   ...tmpFilters,
                                   [entity]: [
-                                    ...tmpFilters[entity],
-                                    filtersByEntity[entity][filter],
+                                    ...tmpFilters[
+                                      entity as keyof SearchFilters
+                                    ],
+                                    filtersByEntity[
+                                      entity as keyof typeof filtersByEntity
+                                    ][filter as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE | INTOLERANCES_FILTERS_TYPE)],
                                   ],
                                 });
                               } else {
                                 setTmpFilters({
                                   ...tmpFilters,
-                                  [entity]: tmpFilters[entity].filter(
+                                  [entity]: tmpFilters[
+                                    entity as keyof SearchFilters
+                                  ].filter(
                                     (value) =>
-                                      value !== filtersByEntity[entity][filter]
+                                      value !== filtersByEntity[entity as keyof typeof filtersByEntity][filter as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE | INTOLERANCES_FILTERS_TYPE)]
                                   ),
                                 });
                               }
