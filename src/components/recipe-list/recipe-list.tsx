@@ -3,20 +3,17 @@ import { RecipeListItem } from "./recipe-list-item";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
-import { RecipeFilters } from "./recipe-filters";
-import { SearchFilters, SearchResults } from "./types";
+import { SearchResults } from "./types";
+import { ResultsPagePagination } from "./results-page-pagination";
 
-export const initialFilterState = {
-  cuisine: [],
-  diet: [],
-  intolerances: [],
-}
+const RESULTS_PER_PAGE = 12
 
 export const RecipeList = () => {
   const searchTerm = useLocation().state.term;
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
+  const [offset, setOffset] = useState<number>(0)
+  const [numberOfResults, setNumberOfResults] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false);
-  const [searchFilters, setSearchFilters] = useState<SearchFilters>(initialFilterState)
 
   const options = useMemo(() => {
     return {
@@ -24,13 +21,10 @@ export const RecipeList = () => {
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
       params: {
         query: searchTerm,
-        cuisine: searchFilters?.cuisine,
-        diet: searchFilters?.diet,
-        intolerances: searchFilters?.intolerances,
         instructionsRequired: "true",
         addRecipeInformation: "true",
-        offset: "0",
-        number: "12",
+        offset: offset,
+        number: RESULTS_PER_PAGE,
         limitLicense: "false",
       },
       headers: {
@@ -39,28 +33,24 @@ export const RecipeList = () => {
           "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       },
     };
-  }, [searchTerm, searchFilters]);
-
-  const handleFilterApply = (filters: SearchFilters) => {
-    setSearchFilters(filters)
-    // fetchRecipes()
-  }
+  }, [searchTerm, offset]);
 
   const fetchRecipes = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await axios.request(options);
       setSearchResults(response.data.results);
+      setNumberOfResults(response.data.totalResults)
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [options]);
+  }, [options,]);
 
   useEffect(() => {
     if (searchTerm) {
-      // fetchRecipes();
+      fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
@@ -76,26 +66,25 @@ export const RecipeList = () => {
           />
         </div>
       )}
-      {!isLoading && mockedData?.length > 0 && (
-        <div className="flex flex-row">
-          <div className="flex flex-col mt-10">
-            <RecipeFilters handleApply={handleFilterApply}/>
-          </div>
+      {!isLoading && searchResults?.length > 0 && (
+        <div className="flex items-center">
           <div className="flex-col">
             <h2 className="m-4 text-center">Results for "{searchTerm}"</h2>
-          <div className="grid grid-cols-3 gap-8 my-4 mx-4">
-            {mockedData?.map((recipe, idx) => {
-              return (
-                <RecipeListItem
-                  key={idx}
-                  id={recipe.id}
-                  image={recipe.image}
-                  title={recipe.title}
-                  cookingTime={recipe.readyInMinutes}
-                />
-              );
-            })}
-          </div>
+            <p className="text-center">Showing <span className="font-bold">{RESULTS_PER_PAGE}</span> of <span className="font-bold">{numberOfResults}</span> results</p>
+            <div className="grid grid-cols-4 gap-8 my-4 mx-4">
+              {searchResults?.map((recipe, idx) => {
+                return (
+                  <RecipeListItem
+                    key={idx}
+                    id={recipe.id}
+                    image={recipe.image}
+                    title={recipe.title}
+                    cookingTime={recipe.readyInMinutes}
+                  />
+                );
+              })}
+            </div>
+              <ResultsPagePagination handlePagination={setOffset} />
           </div>
         </div>
       )}

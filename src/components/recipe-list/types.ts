@@ -2,7 +2,7 @@ export type SearchResults = {
   id: number;
   image: string;
   title: string;
-  nutrition: { nutrients: { name: string; amount: number; unit: string }[] };
+  readyInMinutes: number
 }[];
 
 export type SearchFilters = {
