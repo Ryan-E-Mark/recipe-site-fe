@@ -1,17 +1,19 @@
 import { useLocation } from "react-router-dom";
 import { RecipeListItem } from "./recipe-list-item";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { SearchResults } from "./types";
-import { ResultsPagePagination } from "./results-page-pagination";
 
 const RESULTS_PER_PAGE = 12
 
-export const RecipeList = () => {
+interface RecipeListProps {
+  offset: number
+}
+
+export const RecipeList: FC<RecipeListProps> = ({ offset }) => {
   const searchTerm = useLocation().state.term;
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
-  const [offset, setOffset] = useState<number>(0)
   const [numberOfResults, setNumberOfResults] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,7 +52,7 @@ export const RecipeList = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      fetchRecipes();
+      // fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
@@ -84,7 +86,6 @@ export const RecipeList = () => {
                 );
               })}
             </div>
-              <ResultsPagePagination handlePagination={setOffset} />
           </div>
         </div>
       )}
