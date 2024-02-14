@@ -5,16 +5,21 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { SearchResults } from "./types";
 
-const RESULTS_PER_PAGE = 12
+const RESULTS_PER_PAGE = 12;
 
 interface RecipeListProps {
-  offset: number
+  searchResults: SearchResults | [];
+  setSearchResults: (searchResults: SearchResults) => void;
+  resultsOffset: number;
 }
 
-export const RecipeList: FC<RecipeListProps> = ({ offset }) => {
+export const RecipeList: FC<RecipeListProps> = ({
+  searchResults,
+  setSearchResults,
+  resultsOffset,
+}) => {
   const searchTerm = useLocation().state.term;
-  const [searchResults, setSearchResults] = useState<SearchResults>([]);
-  const [numberOfResults, setNumberOfResults] = useState<number>(0)
+  const [numberOfResults, setNumberOfResults] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const options = useMemo(() => {
@@ -25,7 +30,7 @@ export const RecipeList: FC<RecipeListProps> = ({ offset }) => {
         query: searchTerm,
         instructionsRequired: "true",
         addRecipeInformation: "true",
-        offset: offset,
+        offset: resultsOffset,
         number: RESULTS_PER_PAGE,
         limitLicense: "false",
       },
@@ -35,30 +40,34 @@ export const RecipeList: FC<RecipeListProps> = ({ offset }) => {
           "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       },
     };
-  }, [searchTerm, offset]);
+  }, [searchTerm, resultsOffset]);
 
   const fetchRecipes = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await axios.request(options);
-      setSearchResults(response.data.results);
-      setNumberOfResults(response.data.totalResults)
+      if (searchResults.length) {
+        setSearchResults([...searchResults, response.data.results]);
+      } else {
+        setSearchResults(response.data.results);
+      }
+      setNumberOfResults(response.data.totalResults);
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [options,]);
+  }, [options, setSearchResults]);
 
   useEffect(() => {
     if (searchTerm) {
-      // fetchRecipes();
+      fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
   return (
     <div className="justify-center content-center">
-      {isLoading && (
+      {(isLoading || !searchResults?.length) && (
         <div className="flex justify-center">
           <Oval
             height="60"
@@ -72,19 +81,23 @@ export const RecipeList: FC<RecipeListProps> = ({ offset }) => {
         <div className="flex items-center">
           <div className="flex-col">
             <h2 className="m-4 text-center">Results for "{searchTerm}"</h2>
-            <p className="text-center">Showing <span className="font-bold">{RESULTS_PER_PAGE}</span> of <span className="font-bold">{numberOfResults}</span> results</p>
             <div className="grid grid-cols-4 gap-8 my-4 mx-4">
-              {searchResults?.map((recipe, idx) => {
-                return (
-                  <RecipeListItem
-                    key={idx}
-                    id={recipe.id}
-                    image={recipe.image}
-                    title={recipe.title}
-                    cookingTime={recipe.readyInMinutes}
-                  />
-                );
-              })}
+              {searchResults
+                ?.slice(
+                  resultsOffset ? resultsOffset - 12 : 0,
+                  resultsOffset ? resultsOffset : 12
+                )
+                .map((recipe, idx) => {
+                  return (
+                    <RecipeListItem
+                      key={idx}
+                      id={recipe.id}
+                      image={recipe.image}
+                      title={recipe.title}
+                      cookingTime={recipe.readyInMinutes}
+                    />
+                  );
+                })}
             </div>
           </div>
         </div>
