@@ -1,17 +1,82 @@
-import { useState } from "react"
-import { RecipeList } from "../components/recipe-list/recipe-list"
-import { ResultsPagePagination } from "../components/recipe-list/results-page-pagination"
-import { SearchResults } from "../components/recipe-list/types"
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { RecipeList } from "../components/recipe-list/recipe-list";
+import { ResultsPagePagination } from "../components/recipe-list/results-page-pagination";
+import { SearchResults } from "../components/recipe-list/types";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+
+export const MAX_NUMBER_OF_RESULTS = 100
 
 export const RecipeResults = () => {
-    const [searchResults, setSearchResults] = useState<SearchResults>([])
-    const [resultsOffset, setResultsOffset] = useState<number>(0)
-    
-    return (
-        <div className="flex flex-col flex-wrap justify-between content-center">
-            <RecipeList searchResults={searchResults} setSearchResults={setSearchResults} resultsOffset={resultsOffset} />
-            <ResultsPagePagination handlePagination={setResultsOffset} />
-            <a href="https://www.flaticon.com/free-icons/clock" title="clock icons">Clock icons created by dmitri13 - Flaticon</a>
-        </div>
-    )
-}
+  const [searchResults, setSearchResults] = useState<SearchResults>([]);
+  const [resultsTotal, setResultsTotal] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState<number>(1);
+
+  const searchTerm = useLocation().state.term;
+
+  const options = useMemo(() => {
+    return {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      params: {
+        query: searchTerm,
+        instructionsRequired: "true",
+        addRecipeInformation: "true",
+        number: MAX_NUMBER_OF_RESULTS,
+        limitLicense: "false",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_RECIPE_SEARCH_API_KEY,
+        "X-RapidAPI-Host":
+          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+      },
+    };
+  }, [searchTerm]);
+
+  const fetchRecipes = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.request(options);
+
+      setSearchResults(response.data.results);
+
+      setResultsTotal(response.data.totalResults);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [options, setSearchResults, setResultsTotal]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      fetchRecipes();
+    }
+  }, [searchTerm, fetchRecipes]);
+
+  const pageEnd = page * 12;
+  const pageStart = pageEnd - 12;
+
+  const searchResultsByPage = searchResults?.slice(pageStart, pageEnd);
+  console.log(searchResults)
+
+  return (
+    <div className="h-screen flex flex-col justify-between content-center">
+      <div className="h-full">
+        <RecipeList
+          searchResults={searchResultsByPage}
+          isLoading={isLoading}
+        />
+        <ResultsPagePagination
+          page={page}
+          setPage={setPage}
+          resultsTotal={resultsTotal}
+        />
+        <a href="https://www.flaticon.com/free-icons/clock" title="clock icons">
+          Clock icons created by dmitri13 - Flaticon
+        </a>
+      </div>
+    </div>
+  );
+};
