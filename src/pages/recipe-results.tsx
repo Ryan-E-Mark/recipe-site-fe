@@ -9,7 +9,6 @@ export const MAX_NUMBER_OF_RESULTS = 100
 
 export const RecipeResults = () => {
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
-  const [resultsTotal, setResultsTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState<number>(1);
 
@@ -40,14 +39,13 @@ export const RecipeResults = () => {
       const response = await axios.request(options);
 
       setSearchResults(response.data.results);
-
-      setResultsTotal(response.data.totalResults);
+      setPage(1)
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [options, setSearchResults, setResultsTotal]);
+  }, [options, setSearchResults]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -69,9 +67,9 @@ export const RecipeResults = () => {
           isLoading={isLoading}
         />
         <ResultsPagePagination
-          page={page}
+          activePage={page}
           setPage={setPage}
-          resultsTotal={resultsTotal}
+          resultsTotal={searchResults.length}
         />
         <a href="https://www.flaticon.com/free-icons/clock" title="clock icons">
           Clock icons created by dmitri13 - Flaticon
