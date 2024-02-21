@@ -6,11 +6,13 @@ import { SearchResults } from "./types";
 export const RESULTS_PER_PAGE = 12;
 
 interface RecipeListProps {
+  searchTerm: string
   searchResults: SearchResults | [];
   isLoading: boolean
 }
 
 export const RecipeList: FC<RecipeListProps> = ({
+  searchTerm,
   searchResults,
   isLoading
 }) => {
@@ -29,7 +31,7 @@ export const RecipeList: FC<RecipeListProps> = ({
       )}
       {!isLoading && searchResults?.length > 0 && (
           <div className="flex-col">
-            {/* <h2 className="m-4 text-center">Results for "{searchTerm}"</h2> */}
+            <h2 className="m-4 text-center">Results for "{searchTerm}"</h2>
             <div className="grid grid-cols-4 gap-8 my-4 mx-4">
               {searchResults?.map((recipe, idx) => {
                 return (

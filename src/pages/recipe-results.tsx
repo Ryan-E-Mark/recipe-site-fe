@@ -60,9 +60,10 @@ export const RecipeResults = () => {
   console.log(searchResults)
 
   return (
-    <div className="h-screen flex flex-col justify-between content-center">
+    <div className="h-screen flex flex-wrap flex-col justify-between items-center">
       <div className="h-full">
         <RecipeList
+          searchTerm={searchTerm}
           searchResults={searchResultsByPage}
           isLoading={isLoading}
         />
