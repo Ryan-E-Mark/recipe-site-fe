@@ -57,16 +57,17 @@ export const RecipeResults = () => {
   const pageStart = pageEnd - 12;
 
   const searchResultsByPage = searchResults?.slice(pageStart, pageEnd);
-  console.log(searchResults)
 
   return (
     <div className="h-screen flex flex-wrap flex-col justify-between items-center">
-      <div className="h-full">
+      <div className="h-full flex flex-col items-center">
+        <div className="">
         <RecipeList
           searchTerm={searchTerm}
           searchResults={searchResultsByPage}
           isLoading={isLoading}
         />
+        </div>
         <ResultsPagePagination
           activePage={page}
           setPage={setPage}

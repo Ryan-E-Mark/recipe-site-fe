@@ -18,8 +18,8 @@ export const RecipeList: FC<RecipeListProps> = ({
 }) => {
   
   return (
-    <div className="flex justify-center content-center">
-      {(isLoading || !searchResults?.length) && (
+    <div className="flex h-full justify-center content-center">
+      {(true) && (
         <div className="flex justify-center">
           <Oval
             height="60"
@@ -29,9 +29,9 @@ export const RecipeList: FC<RecipeListProps> = ({
           />
         </div>
       )}
-      {!isLoading && searchResults?.length > 0 && (
+      {/* {!isLoading && searchResults?.length > 0 && (
           <div className="flex-col">
-            <h2 className="m-4 text-center">Results for "{searchTerm}"</h2>
+            <h2 className="m-8 text-center text-lg">Results for <span className="font-bold">"{searchTerm}"</span></h2>
             <div className="grid grid-cols-4 gap-8 my-4 mx-4">
               {searchResults?.map((recipe, idx) => {
                 return (
@@ -46,7 +46,7 @@ export const RecipeList: FC<RecipeListProps> = ({
               })}
             </div>
           </div>
-      )}
+      )} */}
     </div>
   );
 };
