@@ -23,11 +23,11 @@ export const ResultsPagePagination: FC<ResultsPagePaginationProps> = ({ activePa
     }
     
     return (
-        <div className="flex w-1/3 justify-between items-center m-4">
+        <div className="flex w-auto justify-between items-center m-4">
         <button className={`${activePage === 1 ? 'bg-gray-300 opacity-50' : 'border-2 border-lime-200 hover:bg-lime-200'} px-4 py-2 rounded-md w-24`} onClick={handlePrevious} disabled={activePage === 1 ? true : false}>Previous</button>
             {pages.map(pageNumber => {
                 return (
-                    <button key={pageNumber} className={`${activePage === pageNumber ? 'bg-lime-200 rounded-full' : ''} h-6 w-6`} onClick={() => setPage(pageNumber)}>{pageNumber}</button>
+                    <button key={pageNumber} className={`${activePage === pageNumber ? 'bg-lime-200 rounded-full' : ''} h-6 w-6 mx-1`} onClick={() => setPage(pageNumber)}>{pageNumber}</button>
                 )
             })}
         <button className={`${activePage === pages.length ? 'bg-gray-300 opacity-50' : 'border-2 border-lime-200 hover:bg-lime-200'} px-4 py-2 rounded-md w-24`} onClick={handleNext} disabled={activePage === pages.length ? true : false}>Next</button>

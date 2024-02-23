@@ -6,32 +6,34 @@ import { SearchResults } from "./types";
 export const RESULTS_PER_PAGE = 12;
 
 interface RecipeListProps {
-  searchTerm: string
+  searchTerm: string;
   searchResults: SearchResults | [];
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 export const RecipeList: FC<RecipeListProps> = ({
   searchTerm,
   searchResults,
-  isLoading
+  isLoading,
 }) => {
-  
   return (
-    <div className="flex h-full justify-center content-center">
-      {(true) && (
-        <div className="flex justify-center">
+    <>
+      <div className="h-full flex flex-wrap justify-center items-center">
+        {(isLoading || !searchResults.length) && (
           <Oval
             height="60"
             width="60"
             secondaryColor="#ecfccb"
             color="#bef264"
           />
-        </div>
-      )}
-      {/* {!isLoading && searchResults?.length > 0 && (
+        )}
+      </div>
+      <div className="flex justify-center content-center">
+        {!isLoading && searchResults?.length > 0 && (
           <div className="flex-col">
-            <h2 className="m-8 text-center text-lg">Results for <span className="font-bold">"{searchTerm}"</span></h2>
+            <h2 className="m-8 text-center text-lg">
+              Results for <span className="font-bold">"{searchTerm}"</span>
+            </h2>
             <div className="grid grid-cols-4 gap-8 my-4 mx-4">
               {searchResults?.map((recipe, idx) => {
                 return (
@@ -46,8 +48,9 @@ export const RecipeList: FC<RecipeListProps> = ({
               })}
             </div>
           </div>
-      )} */}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import { SearchResults } from "../components/recipe-list/types";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
-export const MAX_NUMBER_OF_RESULTS = 100
+export const MAX_NUMBER_OF_RESULTS = 100;
 
 export const RecipeResults = () => {
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
@@ -39,7 +39,7 @@ export const RecipeResults = () => {
       const response = await axios.request(options);
 
       setSearchResults(response.data.results);
-      setPage(1)
+      setPage(1);
     } catch (err) {
       console.error(err);
     } finally {
@@ -49,7 +49,7 @@ export const RecipeResults = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      fetchRecipes();
+      // fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
@@ -61,13 +61,11 @@ export const RecipeResults = () => {
   return (
     <div className="h-screen flex flex-wrap flex-col justify-between items-center">
       <div className="h-full flex flex-col items-center">
-        <div className="">
         <RecipeList
           searchTerm={searchTerm}
           searchResults={searchResultsByPage}
           isLoading={isLoading}
         />
-        </div>
         <ResultsPagePagination
           activePage={page}
           setPage={setPage}
