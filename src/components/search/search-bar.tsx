@@ -11,16 +11,14 @@ export const SearchBar: FC = () => {
   }
 
   return (
-    <div className="w-auto flex flex-wrap content-center border rounded-lg h-3/4">
-      <form onSubmit={handleSearch} className="border-gray-500">
+      <form onSubmit={handleSearch} className="h-1/2 focus:ring-lime-200 focus:border-lime-200">
         <input
           type="text"
           id="search-bar"
           name="search"
           placeholder="Search recipes..."
-          className="h-full"
+          className="w-auto h-full border-2 rounded-lg focus:ring-lime-200 focus:border-lime-200"
         />
       </form>
-    </div>
   );
 };
