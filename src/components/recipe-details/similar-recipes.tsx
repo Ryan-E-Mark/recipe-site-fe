@@ -1,6 +1,7 @@
 import axios from "axios";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Oval } from "react-loader-spinner";
+import { SimilarRecipesType } from "./types";
 
 interface SimilarRecipesProps {
   recipeId: number;
@@ -8,7 +9,7 @@ interface SimilarRecipesProps {
 
 export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [similarRecipes, setSimilarRecipes] = useState()
+  const [similarRecipes, setSimilarRecipes] = useState<SimilarRecipesType>()
 
   const options = useMemo(() => {
     return {
@@ -26,6 +27,7 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
     try {
       setIsLoading(true);
       const response = await axios.request(options);
+      setSimilarRecipes(response.data)
       console.log(response)
     } catch (err) {
       console.error(err);

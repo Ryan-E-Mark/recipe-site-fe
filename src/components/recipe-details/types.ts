@@ -32,3 +32,11 @@ export type RecipeDetailsType = {
     dairyFree: boolean;
     sourceUrl: string;
   };
+
+  export type SimilarRecipesType = {
+    id: number
+    readyInMinutes: number
+    servings: number
+    sourceUrl: string
+    title: string
+  }[]
