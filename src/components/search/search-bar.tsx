@@ -11,13 +11,13 @@ export const SearchBar: FC = () => {
   }
 
   return (
-      <form onSubmit={handleSearch} className="h-1/2 focus:ring-lime-200 focus:border-lime-200">
+      <form onSubmit={handleSearch} className="h-1/2">
         <input
           type="text"
           id="search-bar"
           name="search"
           placeholder="Search recipes..."
-          className="w-auto h-full border-2 rounded-lg focus:ring-lime-200 focus:border-lime-200"
+          className="w-auto h-full border-2 rounded-lg focus:outline-lime-200 focus:border-lime-200"
         />
       </form>
   );

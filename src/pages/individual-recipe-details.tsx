@@ -2,45 +2,13 @@ import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useLocation } from "react-router-dom";
-
-type RecipeDetailsType = {
-  title: string;
-  cookingMinutes: number;
-  preparationMinutes: number;
-  readyInMinutes: number;
-  image: string;
-  analyzedInstructions: {
-    name: string;
-    steps: {
-      ingredients: {
-        id: number;
-        name: string;
-      }[];
-      step: string;
-    }[];
-  }[];
-  servings: number;
-  extendedIngredients: {
-    aisle: string;
-    image: string;
-    name: string;
-    measures: {
-      us: {
-        amount: number;
-        unitShort: string;
-      };
-    };
-  }[];
-  vegetarian: boolean;
-  vegan: boolean;
-  glutenFree: boolean;
-  dairyFree: boolean;
-  sourceUrl: string;
-};
+import { RecipeDetailsType } from "../components/recipe-details/types";
+import { RecipeDetails } from "../components/recipe-details/recipe-details";
+import { SimilarRecipes } from "../components/recipe-details/similar-recipes";
 
 export const IndividualRecipeDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>(mock);
+  const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>();
   const recipeId = useLocation().state.id;
 
   const options = useMemo(() => {
@@ -69,80 +37,26 @@ export const IndividualRecipeDetails = () => {
 
   useEffect(() => {
     if (recipeId) {
-      // fetchRecipeDetails();
+      fetchRecipeDetails();
     }
   }, [recipeId, fetchRecipeDetails]);
 
   return (
     <div className="flex flex-wrap flex-col content-center justify-content">
       {isLoading && (
-        <div className="flex justify-center">
-          <Oval height="60" width="60" />
+        <div className="h-screen flex justify-center items-center">
+          <Oval
+            height="60"
+            width="60"
+            secondaryColor="#ecfccb"
+            color="#bef264"
+          />
         </div>
       )}
       {!isLoading && (
         <>
-          <div className="flex flex-row justify-center m-10">
-            <div className="flex flex-col">
-              <h2 className="font-bold text-3xl text-center">{recipeDetails?.title}</h2>
-              <div className="flex py-4 gap-4 justify-center">
-                <p>
-                  <span className="font-bold">Preparation Time:</span>{" "}
-                  {recipeDetails?.preparationMinutes} minutes
-                </p>
-                <p>
-                  <span className="font-bold">Cooking Time:</span>{" "}
-                  {recipeDetails?.cookingMinutes} minutes
-                </p>
-                <p>
-                  <span className="font-bold">Total Time:</span>{" "}
-                  {recipeDetails?.readyInMinutes} minutes
-                </p>
-              </div>
-              <div className="flex gap-x-20">
-                <div className="flex flex-wrap flex-col justify-center content-center bg-gray-100 py-6 px-10 rounded-md">
-                  <h3 className="font-bold border-b-2 text-xl">Ingredients</h3>
-                  {recipeDetails?.extendedIngredients.map((ingr) => {
-                    return (
-                      <p>
-                        -
-                        <span className="font-bold">
-                          {ingr.measures.us.amount} {ingr.measures.us.unitShort}
-                        </span>{" "}
-                        {ingr.name}
-                      </p>
-                    );
-                  })}
-                </div>
-                <img
-                  alt="recipe-thumbnail"
-                  src={recipeDetails?.image}
-                  className="rounded-md"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center">
-            <div className="w-3/5 flex flex-col justify-start">
-              <h3 className="font-bold border-b-2 border-gray-100 text-xl pl-7">
-                Instructions
-              </h3>
-              {recipeDetails?.analyzedInstructions[0].steps.map(
-                (instr, idx) => {
-                  return (
-                    <div className="flex flex-row gap-x-3 p-6">
-                      <div className="font-bold flex justify-center items-center text-black bg-lime-200 rounded-full h-8 w-8 ">
-                        {idx + 1}
-                      </div>
-                      <div className="w-full">
-                        <p>{instr.step}</p>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          </div>
+        <RecipeDetails recipeDetails={recipeDetails} />
+        <SimilarRecipes recipeId={recipeId}/>
         </>
       )}
     </div>

@@ -49,7 +49,7 @@ export const RecipeResults = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      // fetchRecipes();
+      fetchRecipes();
     }
   }, [searchTerm, fetchRecipes]);
 
