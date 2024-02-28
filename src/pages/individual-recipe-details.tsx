@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Oval } from "react-loader-spinner";
 import { useLocation } from "react-router-dom";
 import { RecipeDetailsType } from "../components/recipe-details/types";
 import { RecipeDetails } from "../components/recipe-details/recipe-details";
 import { SimilarRecipes } from "../components/recipe-details/similar-recipes";
+import { Loader } from "../components/loader";
 
 export const IndividualRecipeDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>();
   const recipeId = useLocation().state.id;
-  console.log(recipeDetails)
+  console.log(recipeDetails);
   const options = useMemo(() => {
     return {
       method: "GET",
@@ -45,18 +45,13 @@ export const IndividualRecipeDetails = () => {
     <div className="flex flex-wrap flex-col content-center justify-content">
       {isLoading && (
         <div className="h-screen flex justify-center items-center">
-          <Oval
-            height="60"
-            width="60"
-            secondaryColor="#ecfccb"
-            color="#bef264"
-          />
+          <Loader />
         </div>
       )}
       {!isLoading && (
         <>
-        <RecipeDetails recipeDetails={recipeDetails} />
-        <SimilarRecipes recipeId={recipeId}/>
+          <RecipeDetails recipeDetails={recipeDetails} />
+          <SimilarRecipes recipeId={recipeId} />
         </>
       )}
     </div>

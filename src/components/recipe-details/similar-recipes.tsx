@@ -1,8 +1,8 @@
 import axios from "axios";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { Oval } from "react-loader-spinner";
 import { SimilarRecipesType } from "./types";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../loader";
 
 interface SimilarRecipesProps {
   recipeId: number;
@@ -52,7 +52,7 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
     <div className="flex flex-col items-center mb-4">
       <h3 className="font-bold text-md underline">Similar Recipes</h3>
       {isLoading && (
-        <Oval height="60" width="60" secondaryColor="#ecfccb" color="#bef264" />
+        <Loader />
       )}
       {!isLoading && similarRecipes?.length && (
         <div className="flex flex-col justify-start">

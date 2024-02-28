@@ -1,17 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
-import { Oval } from "react-loader-spinner";
+import { useMemo, useState } from "react";
+import { Loader } from "../components/loader";
 
 export const RandomRecipes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState();
 
-  const options = {
+  const options = useMemo(() => {
+    return {
     method: "GET",
     url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random",
     params: {
-      tags: "vegetarian,dessert",
       number: "1",
     },
     headers: {
@@ -19,6 +19,7 @@ export const RandomRecipes = () => {
       "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
     },
   };
+}, [])
 
   const handleRandomSearch = async () => {
     try {
@@ -36,7 +37,7 @@ export const RandomRecipes = () => {
     <div>
       {isLoading && (
         <div className="flex justify-center">
-          <Oval height="60" width="60" />
+          <Loader />
         </div>
       )}
       <button

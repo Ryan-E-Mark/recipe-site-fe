@@ -1,7 +1,7 @@
 import { RecipeListItem } from "./recipe-list-item";
 import { FC } from "react";
-import { Oval } from "react-loader-spinner";
 import { SearchResults } from "./types";
+import { Loader } from "../loader";
 
 export const RESULTS_PER_PAGE = 12;
 
@@ -20,11 +20,7 @@ export const RecipeList: FC<RecipeListProps> = ({
     <>
       <div className="h-full flex flex-wrap justify-center items-center">
         {(isLoading || !searchResults.length) && (
-          <Oval
-            height="60"
-            width="60"
-            secondaryColor="#ecfccb"
-            color="#bef264"
+          <Loader
           />
         )}
       </div>
