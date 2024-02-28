@@ -30,11 +30,11 @@ export const RecipeDetails: FC<RecipeDetailsProps> = ({ recipeDetails }) => {
               <div className="flex gap-x-20">
                 <div className="flex flex-wrap flex-col justify-center content-center bg-gray-100 py-6 px-10 rounded-md">
                   <h3 className="font-bold border-b-2 text-xl">Ingredients</h3>
-                  {recipeDetails?.extendedIngredients.map((ingr) => {
+                  {recipeDetails?.extendedIngredients.map((ingr, idx) => {
                     return (
                       <p>
                         -
-                        <span className="font-bold">
+                        <span className="font-bold" key={idx}>
                           {ingr.measures.us.amount} {ingr.measures.us.unitShort}
                         </span>{" "}
                         {ingr.name}

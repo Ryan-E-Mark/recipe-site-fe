@@ -10,7 +10,7 @@ export const IndividualRecipeDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>();
   const recipeId = useLocation().state.id;
-
+  console.log(recipeDetails)
   const options = useMemo(() => {
     return {
       method: "GET",

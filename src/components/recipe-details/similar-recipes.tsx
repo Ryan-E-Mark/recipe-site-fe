@@ -2,6 +2,7 @@ import axios from "axios";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { SimilarRecipesType } from "./types";
+import { useNavigate } from "react-router-dom";
 
 interface SimilarRecipesProps {
   recipeId: number;
@@ -9,7 +10,9 @@ interface SimilarRecipesProps {
 
 export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [similarRecipes, setSimilarRecipes] = useState<SimilarRecipesType>()
+  const [similarRecipes, setSimilarRecipes] = useState<SimilarRecipesType>();
+
+  const navigate = useNavigate();
 
   const options = useMemo(() => {
     return {
@@ -27,28 +30,45 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
     try {
       setIsLoading(true);
       const response = await axios.request(options);
-      setSimilarRecipes(response.data)
-      console.log(response)
+      setSimilarRecipes(response.data);
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [options]);
 
   useEffect(() => {
     if (recipeId) {
-
-        // fetchSimilarRecipes()
+      fetchSimilarRecipes();
     }
-  }, [recipeId]);
+  }, [recipeId, fetchSimilarRecipes]);
+
+  const handleOnClick = (id: number) => {
+    navigate(`/recipes/${id}`, { state: { id: id } });
+  };
 
   return (
-    <>
-      <h3>Similar Recipes</h3>
+    <div className="flex flex-col items-center mb-4">
+      <h3 className="font-bold text-md underline">Similar Recipes</h3>
       {isLoading && (
         <Oval height="60" width="60" secondaryColor="#ecfccb" color="#bef264" />
       )}
-    </>
+      {!isLoading && similarRecipes?.length && (
+        <div className="flex flex-col justify-start">
+          {similarRecipes.map((recipe, idx) => {
+            return (
+              <div
+                className="flex hover:text-gray-500 py-1 cursor-pointer"
+                key={idx}
+                onClick={() => handleOnClick(recipe.id)}
+              > 
+                <h4>- {recipe.title}</h4>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 };
