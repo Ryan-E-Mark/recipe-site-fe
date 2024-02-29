@@ -27,8 +27,8 @@ export const BreakfastSuggested: FC = () => {
     try {
       setIsLoading(true);
       const response = await axios.request(options);
-
-      setBreakfastRecipes(response.data);
+      console.log(response)
+      setBreakfastRecipes(response.data.recipes);
     } catch (err) {
       console.error(err);
     } finally {
@@ -39,10 +39,10 @@ export const BreakfastSuggested: FC = () => {
   useEffect(() => {
     fetchBreakfastRecipes();
   }, [fetchBreakfastRecipes]);
-
+console.log(breakfastRecipes)
   return (
     <div>
-      <h2 className="text-4xl font-bold underline">Breakfast</h2>
+      <h2 className="text-2xl font-bold underline">Breakfast</h2>
       {isLoading && <Loader />}
       {!isLoading && breakfastRecipes?.length && (
         breakfastRecipes.map((recipe, idx) => {

@@ -1,12 +1,9 @@
+import { BreakfastSuggested } from "../components/breakfast-suggested/breakfast-suggested";
 
 export const HomePage = () => {
   return (
     <div>
-      <h2>Suggested content</h2>
-      <p>The suggested content</p>
-      <br />
-      <h2>Suggested content</h2>
-      <p>The suggested content</p>
+      <BreakfastSuggested />
     </div>
   );
 };
