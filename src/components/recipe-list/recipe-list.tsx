@@ -1,7 +1,7 @@
 import { RecipeListItem } from "./recipe-list-item";
 import { FC } from "react";
 import { SearchResults } from "./types";
-import { Loader } from "../loader";
+import { Loader } from "../common/loader";
 
 export const RESULTS_PER_PAGE = 12;
 

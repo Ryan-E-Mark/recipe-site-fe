@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useMemo, useState } from "react";
-import { Loader } from "../components/loader";
+import { Loader } from "../components/common/loader";
 
 export const RandomRecipes = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { RecipeDetailsType } from "../components/recipe-details/types";
 import { RecipeDetails } from "../components/recipe-details/recipe-details";
 import { SimilarRecipes } from "../components/recipe-details/similar-recipes";
-import { Loader } from "../components/loader";
+import { Loader } from "../components/common/loader";
 
 export const IndividualRecipeDetails = () => {
   const [isLoading, setIsLoading] = useState(false);

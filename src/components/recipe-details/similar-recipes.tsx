@@ -2,7 +2,7 @@ import axios from "axios";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { SimilarRecipesType } from "./types";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "../loader";
+import { Loader } from "../common/loader";
 
 interface SimilarRecipesProps {
   recipeId: number;
