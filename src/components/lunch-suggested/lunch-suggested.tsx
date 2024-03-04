@@ -36,7 +36,7 @@ export const LunchSuggested: FC = () => {
       setIsLoading(true);
       const response = await axios.request(options);
 
-      setLunchRecipes(response.data);
+      setLunchRecipes(response.data.recipes);
     } catch (err) {
       console.error(err);
     } finally {
@@ -49,25 +49,44 @@ export const LunchSuggested: FC = () => {
   }, [fetchLunchRecipes]);
 
   return (
-    <div className="w-full flex flex-col items-start">
-      <h2 className="text-2xl font-bold underline mx-8">Breakfast</h2>
-      {isLoading && <Loader />}
-      <div className="flex">
-      {!isLoading &&
-        lunchRecipes?.length &&
-        lunchRecipes.map((recipe, idx) => {
-          return (
-            <div key={idx} className="flex flex-col p-4 px-8 justify-center items-center">
-              <img alt="recipe-thumbnail" src={recipe.image} className="w-80 h-80 hover:cursor-pointer" onClick={() => handleOnClick(recipe.id)}/>
-              <h3 className="font-bold hover:underline hover:cursor-pointer" onClick={() => handleOnClick(recipe.id)}>{recipe.title}</h3>
-              <div className="flex justify-center bg-gray-200 rounded-lg w-2/5 gap-x-2">
-                <img alt="spoon&fork" src={clock} className="w-6 h-6 p-1" />
-                <span>- {getCookingTimeFormatted(recipe.readyInMinutes)}</span>
-              </div>
-            </div>
-          );
-        })}
+    <div className="w-full flex flex-col items-start mx-16">
+      <h2 className="text-2xl font-bold underline mx-8">Lunch</h2>
+      {isLoading && (
+        <div className="w-full h-full flex justify-center items-center">
+          <Loader />
         </div>
+      )}
+      <div className="flex">
+        {!isLoading &&
+          lunchRecipes?.length &&
+          lunchRecipes.map((recipe, idx) => {
+            return (
+              <div
+                key={idx}
+                className="flex flex-col p-4 px-8 justify-center items-center"
+              >
+                <img
+                  alt="recipe-thumbnail"
+                  src={recipe.image}
+                  className="w-80 h-80 hover:cursor-pointer"
+                  onClick={() => handleOnClick(recipe.id)}
+                />
+                <h3
+                  className="font-bold hover:underline hover:cursor-pointer"
+                  onClick={() => handleOnClick(recipe.id)}
+                >
+                  {recipe.title}
+                </h3>
+                <div className="flex justify-center bg-gray-200 rounded-lg w-2/5 gap-x-2">
+                  <img alt="spoon&fork" src={clock} className="w-6 h-6 p-1" />
+                  <span>
+                    - {getCookingTimeFormatted(recipe.readyInMinutes)}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };
