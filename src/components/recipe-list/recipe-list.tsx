@@ -2,6 +2,7 @@ import { RecipeListItem } from "./recipe-list-item";
 import { FC } from "react";
 import { SearchResults } from "./types";
 import { Loader } from "../common/loader";
+import { NoResults } from "../no-results";
 
 export const RESULTS_PER_PAGE = 12;
 
@@ -19,13 +20,13 @@ export const RecipeList: FC<RecipeListProps> = ({
   return (
     <>
       <div className="h-full flex flex-wrap justify-center items-center">
-        {(isLoading || !searchResults.length) && (
+        {isLoading && (
           <Loader
           />
         )}
       </div>
-      <div className="flex justify-center content-center">
         {!isLoading && searchResults?.length > 0 && (
+      <div className="flex justify-center content-center">
           <div className="flex-col">
             <h2 className="m-8 text-center text-lg">
               Results for <span className="font-bold">"{searchTerm}"</span>
@@ -44,8 +45,13 @@ export const RecipeList: FC<RecipeListProps> = ({
               })}
             </div>
           </div>
+        </div>
         )}
-      </div>
+        {!isLoading && !searchResults?.length && (
+          <div className="h-full">
+          <NoResults searchTerm={searchTerm} />
+          </div>
+        )}
     </>
   );
 };
