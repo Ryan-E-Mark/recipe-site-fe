@@ -48,7 +48,7 @@ export const BreakfastSuggested: FC = () => {
   }, [fetchBreakfastRecipes]);
 
   return (
-    <div className="w-full flex flex-col items-start mx-16">
+    <div className="w-full flex flex-col items-start">
       <h2 className="text-2xl font-bold underline mx-8">Breakfast</h2>
       {isLoading && (
         <div className="w-full h-full flex justify-center items-center">
@@ -67,7 +67,7 @@ export const BreakfastSuggested: FC = () => {
                 <img
                   alt="recipe-thumbnail"
                   src={recipe.image}
-                  className="w-80 h-80 hover:cursor-pointer"
+                  className=" hover:cursor-pointer"
                   onClick={() => handleOnClick(recipe.id)}
                 />
                 <h3
