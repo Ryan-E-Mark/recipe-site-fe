@@ -20,10 +20,9 @@ export const SearchByIngredients = () => {
           <div className="flex">
             {INGREDIENTS.map((ingr, idx) => {
               return (
-                <div className="px-1">
-                  <div
-                    key={idx}
-                    className="px-2 border border-lime-300 hover:bg-lime-300 hover:cursor-pointer hover:font-bold"
+                <div key={idx} className="px-1">
+                  <div 
+                    className="px-2 border border-lime-200 hover:bg-lime-200 hover:cursor-pointer hover:font-bold"
                   >
                     <a href={`#${ingr.letter}`}>{ingr.letter}</a>
                   </div>
