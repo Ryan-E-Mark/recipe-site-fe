@@ -6,6 +6,7 @@ import { IndividualRecipeDetails } from './pages/individual-recipe-details'
 import { Header } from './components/header/header'
 import { RandomRecipes } from './pages/random-recipes'
 import { SearchByIngredients } from './pages/search-by-ingredient'
+import { SearchByIngredientResults } from './pages/search-by-ingredient-results'
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
           <Route path='/recipes/:recipeId' element={<IndividualRecipeDetails />} />
           <Route path='/random-recipe' element={<RandomRecipes />} />
           <Route path='/recipe-by-ingredient' element={<SearchByIngredients />} />
+          <Route path='/recipe-by-ingredient-results' element={<SearchByIngredientResults />} />
         </Routes>
       </BrowserRouter>
   )
