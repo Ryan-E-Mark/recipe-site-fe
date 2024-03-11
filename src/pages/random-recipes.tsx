@@ -34,18 +34,18 @@ export const RandomRecipes = () => {
   };
 
   return (
-    <div>
-      {isLoading && (
-        <div className="flex justify-center">
-          <Loader />
-        </div>
-      )}
+    <div className="h-screen flex flex-col justify-center items-center">
       <button
         onClick={handleRandomSearch}
-        className="w-1/2 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto"
+        className="w-1/6 h-12 border border-solid border-lime-200 hover:bg-lime-200 text-black font-bold py-2 px-4 rounded-full mx-auto"
       >
         Search
       </button>
+      {true && (
+        <div className="flex h-full justify-center items-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
