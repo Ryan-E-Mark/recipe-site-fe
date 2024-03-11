@@ -49,8 +49,8 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center mb-4">
-      <h3 className="font-bold text-md underline">Similar Recipes</h3>
+    <div className="flex flex-col items-center m-10 p-4 bg-gray-100 rounded-md">
+      <h3 className="font-bold text-xl underline">Similar Recipes</h3>
       {isLoading && (
         <Loader />
       )}
@@ -59,7 +59,7 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
           {similarRecipes.map((recipe, idx) => {
             return (
               <div
-                className="flex hover:text-gray-500 py-1 cursor-pointer"
+                className="flex hover:underline hover:text-gray-500 py-1 cursor-pointer"
                 key={idx}
                 onClick={() => handleOnClick(recipe.id)}
               > 

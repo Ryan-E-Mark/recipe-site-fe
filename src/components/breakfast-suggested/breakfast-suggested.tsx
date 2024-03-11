@@ -49,7 +49,7 @@ export const BreakfastSuggested: FC = () => {
 
   return (
     <div className="w-full flex flex-col items-start">
-      <h2 className="text-2xl font-bold underline mx-8">Breakfast</h2>
+      <h2 className="text-2xl font-bold mx-8">Breakfast</h2>
       {isLoading && (
         <div className="w-full h-full flex justify-center items-center">
           <Loader />
@@ -62,16 +62,16 @@ export const BreakfastSuggested: FC = () => {
             return (
               <div
                 key={idx}
-                className="flex flex-col p-4 px-8 justify-center items-center"
+                className="flex flex-col p-4 px-8 justify-center items-center gap-y-2"
               >
                 <img
                   alt="recipe-thumbnail"
                   src={recipe.image}
-                  className=" hover:cursor-pointer"
+                  className=" hover:cursor-pointer rounded-sm"
                   onClick={() => handleOnClick(recipe.id)}
                 />
                 <h3
-                  className="font-bold hover:underline hover:cursor-pointer"
+                  className="font-bold text-lg text-center hover:underline hover:cursor-pointer"
                   onClick={() => handleOnClick(recipe.id)}
                 >
                   {recipe.title}
