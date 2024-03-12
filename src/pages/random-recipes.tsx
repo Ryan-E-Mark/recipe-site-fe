@@ -7,15 +7,21 @@ import {
   INTOLERANCES_FILTERS_TYPE,
   SearchFilters,
 } from "../components/recipe-list/types";
-import { CUISINE_FILTERS, DIET_FILTERS, INTOLERANCES_FILTERS } from "../components/recipe-list/filter-helpers";
+import {
+  CUISINE_FILTERS,
+  DIET_FILTERS,
+  INTOLERANCES_FILTERS,
+} from "../components/recipe-list/filter-helpers";
+import { getStringCapitalized } from "../utils/get-string-capitalized";
 
-const filterEntities = ["cuisine", "diet", "intolerances"];
+const filterEntities = ["cuisine", "diet"];
 
 const initialFilterState = {
   cuisine: [],
   diet: [],
-  intolerances: []
-}
+};
+
+type FilterType = Pick<SearchFilters, 'cuisine' | 'diet'>
 
 export const RandomRecipes = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +29,7 @@ export const RandomRecipes = () => {
   const [searchResults, setSearchResults] = useState();
 
   const [tmpFilters, setTmpFilters] =
-    useState<SearchFilters>(initialFilterState);
+    useState<FilterType>(initialFilterState);
 
   const filtersByEntity: {
     cuisine: CUISINE_FILTERS_TYPE;
@@ -42,8 +48,13 @@ export const RandomRecipes = () => {
   };
 
   const handleApply = () => {
-    // setSearchParams()
-  }
+    setSearchParams([
+      ...tmpFilters.cuisine,
+      ...tmpFilters.diet,
+    ]);
+  };
+
+  console.log(searchParams);
 
   const options = useMemo(() => {
     return {
@@ -78,105 +89,123 @@ export const RandomRecipes = () => {
       <div className="flex flex-col justify-center items-center self-start">
         <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center">
           <h3>Filter your results</h3>
-          <div className="flex gap-x-4">
+          <div className="grid grid-cols-2 gap-x-4">
             {filterEntities.map((entity) => {
               return (
                 <div className="w-auto">
-                  <label className="font-bold">{entity.toUpperCase()}</label>
-                  <div className="bg-white rounded-lg shadow dark:bg-gray-700">
-                    <ul className="grid grid-cols-3">
-                      {Object.keys(
-                        filtersByEntity[entity as keyof typeof filtersByEntity]
-                      ).map((filter, idx) => {
-                        const isChecked = !!tmpFilters[
-                          entity as keyof SearchFilters
-                        ].includes(
+                  <button
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                  >
+                    {getStringCapitalized(entity)}
+                    <svg
+                      className="-mr-1 h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                    <div className="py-1 overflow-y-scroll h-36" role="none">
+                      <ul>
+                        {Object.keys(
                           filtersByEntity[
                             entity as keyof typeof filtersByEntity
-                          ][
-                            filter as keyof (
-                              | CUISINE_FILTERS_TYPE
-                              | DIET_FILTERS_TYPE
-                              | INTOLERANCES_FILTERS_TYPE
-                            )
                           ]
-                        );
+                        ).map((filter, idx) => {
+                          const isChecked = !!tmpFilters[
+                            entity as keyof FilterType
+                          ].includes(
+                            filtersByEntity[
+                              entity as keyof typeof filtersByEntity
+                            ][
+                              filter as keyof (
+                                | CUISINE_FILTERS_TYPE
+                                | DIET_FILTERS_TYPE
+                              )
+                            ]
+                          );
 
-                        return (
-                          <li key={idx} className="w-full rounded-t-lg">
-                            <div className="flex items-center ps-3">
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                value={
-                                  filtersByEntity[
-                                    entity as keyof typeof filtersByEntity
-                                  ][
-                                    filter as keyof (
-                                      | CUISINE_FILTERS_TYPE
-                                      | DIET_FILTERS_TYPE
-                                      | INTOLERANCES_FILTERS_TYPE
-                                    )
-                                  ]
-                                }
-                                onChange={() => {
-                                  if (!isChecked) {
-                                    setTmpFilters({
-                                      ...tmpFilters,
-                                      [entity]: [
-                                        ...tmpFilters[
-                                          entity as keyof SearchFilters
-                                        ],
-                                        filtersByEntity[
-                                          entity as keyof typeof filtersByEntity
-                                        ][
-                                          filter as keyof (
-                                            | CUISINE_FILTERS_TYPE
-                                            | DIET_FILTERS_TYPE
-                                            | INTOLERANCES_FILTERS_TYPE
-                                          )
-                                        ],
-                                      ],
-                                    });
-                                  } else {
-                                    setTmpFilters({
-                                      ...tmpFilters,
-                                      [entity]: tmpFilters[
-                                        entity as keyof SearchFilters
-                                      ].filter(
-                                        (value) =>
-                                          value !==
+                          return (
+                            <li key={idx} className="w-full rounded-t-lg">
+                              <div className="flex items-center ps-3">
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  value={
+                                    filtersByEntity[
+                                      entity as keyof typeof filtersByEntity
+                                    ][
+                                      filter as keyof (
+                                        | CUISINE_FILTERS_TYPE
+                                        | DIET_FILTERS_TYPE
+                                        | INTOLERANCES_FILTERS_TYPE
+                                      )
+                                    ]
+                                  }
+                                  onChange={() => {
+                                    if (!isChecked) {
+                                      setTmpFilters({
+                                        ...tmpFilters,
+                                        [entity]: [
+                                          ...tmpFilters[
+                                            entity as keyof FilterType
+                                          ],
                                           filtersByEntity[
                                             entity as keyof typeof filtersByEntity
                                           ][
                                             filter as keyof (
                                               | CUISINE_FILTERS_TYPE
                                               | DIET_FILTERS_TYPE
-                                              | INTOLERANCES_FILTERS_TYPE
                                             )
-                                          ]
-                                      ),
-                                    });
-                                  }
-                                }}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                              />
-                              <label className="w-full py-3 ms-2 text-sm font-medium dark:text-gray-300">
-                                {filter}
-                              </label>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                                          ],
+                                        ],
+                                      });
+                                    } else {
+                                      setTmpFilters({
+                                        ...tmpFilters,
+                                        [entity]: tmpFilters[
+                                          entity as keyof FilterType
+                                        ].filter(
+                                          (value) =>
+                                            value !==
+                                            filtersByEntity[
+                                              entity as keyof typeof filtersByEntity
+                                            ][
+                                              filter as keyof (
+                                                | CUISINE_FILTERS_TYPE
+                                                | DIET_FILTERS_TYPE
+                                              )
+                                            ]
+                                        ),
+                                      });
+                                    }
+                                  }}
+                                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded dark:bg-gray-600 dark:border-gray-500"
+                                />
+                                <label className="text-gray-700 block px-4 py-2 text-sm">
+                                  {filter}
+                                </label>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
                   </div>
-                </div>
               );
             })}
           </div>
           <div className="w-3/4 flex flex-wrap justify-between">
             <button onClick={handleClear}>Clear</button>
-            <button onClick={() => handleApply(tmpFilters)}>Apply</button>
+            <button onClick={handleApply}>Apply</button>
           </div>
         </div>
         <button
