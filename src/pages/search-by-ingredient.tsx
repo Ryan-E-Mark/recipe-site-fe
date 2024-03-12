@@ -56,9 +56,9 @@ export const SearchByIngredients = () => {
                       })}
                   </div>
                 </div>
-              );
+              )};
             }
-          })}
+        )}
         </div>
       </div>
     </div>
