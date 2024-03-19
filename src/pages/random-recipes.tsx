@@ -4,15 +4,14 @@ import { Loader } from "../components/common/loader";
 import {
   CUISINE_FILTERS_TYPE,
   DIET_FILTERS_TYPE,
-  INTOLERANCES_FILTERS_TYPE,
   SearchFilters,
 } from "../components/recipe-list/types";
 import {
   CUISINE_FILTERS,
   DIET_FILTERS,
-  INTOLERANCES_FILTERS,
 } from "../components/recipe-list/filter-helpers";
 import { getStringCapitalized } from "../utils/get-string-capitalized";
+import { getStringFormatted } from "../utils/get-string-formatted";
 
 const filterEntities = ["cuisine", "diet"];
 
@@ -21,25 +20,26 @@ const initialFilterState = {
   diet: [],
 };
 
-type FilterType = Pick<SearchFilters, 'cuisine' | 'diet'>
+type FilterType = Pick<SearchFilters, "cuisine" | "diet">;
 
 export const RandomRecipes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState();
+  const [isDropdownOpen, setIsDropdownOpen] = useState({
+    cuisine: false,
+    diet: false,
+  });
 
-  const [tmpFilters, setTmpFilters] =
-    useState<FilterType>(initialFilterState);
+  const [tmpFilters, setTmpFilters] = useState<FilterType>(initialFilterState);
 
   const filtersByEntity: {
     cuisine: CUISINE_FILTERS_TYPE;
     diet: DIET_FILTERS_TYPE;
-    intolerances: INTOLERANCES_FILTERS_TYPE;
   } = useMemo(() => {
     return {
       cuisine: CUISINE_FILTERS,
       diet: DIET_FILTERS,
-      intolerances: INTOLERANCES_FILTERS,
     };
   }, []);
 
@@ -48,13 +48,8 @@ export const RandomRecipes = () => {
   };
 
   const handleApply = () => {
-    setSearchParams([
-      ...tmpFilters.cuisine,
-      ...tmpFilters.diet,
-    ]);
+    setSearchParams([...tmpFilters.cuisine, ...tmpFilters.diet]);
   };
-
-  console.log(searchParams);
 
   const options = useMemo(() => {
     return {
@@ -84,20 +79,34 @@ export const RandomRecipes = () => {
     }
   };
 
+  console.log(isDropdownOpen);
+
   return (
     <div className="h-screen grid">
       <div className="flex flex-col justify-center items-center self-start">
-        <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center">
-          <h3>Filter your results</h3>
+        <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center p-2">
+          <h3 className="text-lg font-bold">Filter your results</h3>
           <div className="grid grid-cols-2 gap-x-4">
-            {filterEntities.map((entity) => {
+            {Object.keys(filtersByEntity).map((entity) => {
               return (
                 <div className="w-auto">
                   <button
-                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex w-52 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded="true"
                     aria-haspopup="true"
+                    onClick={() =>
+                      setIsDropdownOpen({
+                        ...isDropdownOpen,
+                        [entity]:
+                          !isDropdownOpen[
+                            entity as keyof (
+                              | CUISINE_FILTERS_TYPE
+                              | DIET_FILTERS_TYPE
+                            )
+                          ],
+                      })
+                    }
                   >
                     {getStringCapitalized(entity)}
                     <svg
@@ -113,7 +122,10 @@ export const RandomRecipes = () => {
                       />
                     </svg>
                   </button>
-                    <div className="py-1 overflow-y-scroll h-36" role="none">
+                  {isDropdownOpen[
+                    entity as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE)
+                  ] && (
+                    <div className="py-2 my-2 bg-white rounded-lg overflow-y-scroll h-36" role="none">
                       <ul>
                         {Object.keys(
                           filtersByEntity[
@@ -146,7 +158,6 @@ export const RandomRecipes = () => {
                                       filter as keyof (
                                         | CUISINE_FILTERS_TYPE
                                         | DIET_FILTERS_TYPE
-                                        | INTOLERANCES_FILTERS_TYPE
                                       )
                                     ]
                                   }
@@ -191,7 +202,7 @@ export const RandomRecipes = () => {
                                   className="w-4 h-4 bg-gray-100 border-gray-300 rounded dark:bg-gray-600 dark:border-gray-500"
                                 />
                                 <label className="text-gray-700 block px-4 py-2 text-sm">
-                                  {filter}
+                                  {getStringFormatted(filter)}
                                 </label>
                               </div>
                             </li>
@@ -199,13 +210,14 @@ export const RandomRecipes = () => {
                         })}
                       </ul>
                     </div>
-                  </div>
+                  )}
+                </div>
               );
             })}
           </div>
           <div className="w-3/4 flex flex-wrap justify-between">
-            <button onClick={handleClear}>Clear</button>
-            <button onClick={handleApply}>Apply</button>
+            <button onClick={handleClear} className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full">Clear</button>
+            <button onClick={handleApply} className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full">Apply</button>
           </div>
         </div>
         <button
