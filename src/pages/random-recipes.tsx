@@ -30,7 +30,6 @@ export const RandomRecipes = () => {
     cuisine: false,
     diet: false,
   });
-
   const [tmpFilters, setTmpFilters] = useState<FilterType>(initialFilterState);
 
   const filtersByEntity: {
@@ -79,12 +78,10 @@ export const RandomRecipes = () => {
     }
   };
 
-  console.log(isDropdownOpen);
-
   return (
     <div className="h-screen grid">
       <div className="flex flex-col justify-center items-center self-start">
-        <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center p-2">
+        <div className="border-2 bg-gray-200 rounded-md flex flex-col items-center p-2 gap-y-4">
           <h3 className="text-lg font-bold">Filter your results</h3>
           <div className="grid grid-cols-2 gap-x-4">
             {Object.keys(filtersByEntity).map((entity) => {
@@ -125,7 +122,9 @@ export const RandomRecipes = () => {
                   {isDropdownOpen[
                     entity as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE)
                   ] && (
-                    <div className="py-2 my-2 bg-white rounded-lg overflow-y-scroll h-36" role="none">
+                    <div
+                      className="py-2 my-2 bg-white drop-shadow-lg rounded-lg overflow-y-scroll h-36 absolute z-10"
+                    >
                       <ul>
                         {Object.keys(
                           filtersByEntity[
@@ -146,7 +145,46 @@ export const RandomRecipes = () => {
                           );
 
                           return (
-                            <li key={idx} className="w-full rounded-t-lg">
+                            <li
+                              key={idx}
+                              className="w-full rounded-t-lg hover:bg-gray-50"
+                              onClick={() => {
+                                if (!isChecked) {
+                                  setTmpFilters({
+                                    ...tmpFilters,
+                                    [entity]: [
+                                      ...tmpFilters[entity as keyof FilterType],
+                                      filtersByEntity[
+                                        entity as keyof typeof filtersByEntity
+                                      ][
+                                        filter as keyof (
+                                          | CUISINE_FILTERS_TYPE
+                                          | DIET_FILTERS_TYPE
+                                        )
+                                      ],
+                                    ],
+                                  });
+                                } else {
+                                  setTmpFilters({
+                                    ...tmpFilters,
+                                    [entity]: tmpFilters[
+                                      entity as keyof FilterType
+                                    ].filter(
+                                      (value) =>
+                                        value !==
+                                        filtersByEntity[
+                                          entity as keyof typeof filtersByEntity
+                                        ][
+                                          filter as keyof (
+                                            | CUISINE_FILTERS_TYPE
+                                            | DIET_FILTERS_TYPE
+                                          )
+                                        ]
+                                    ),
+                                  });
+                                }
+                              }}
+                            >
                               <div className="flex items-center ps-3">
                                 <input
                                   type="checkbox"
@@ -161,44 +199,6 @@ export const RandomRecipes = () => {
                                       )
                                     ]
                                   }
-                                  onChange={() => {
-                                    if (!isChecked) {
-                                      setTmpFilters({
-                                        ...tmpFilters,
-                                        [entity]: [
-                                          ...tmpFilters[
-                                            entity as keyof FilterType
-                                          ],
-                                          filtersByEntity[
-                                            entity as keyof typeof filtersByEntity
-                                          ][
-                                            filter as keyof (
-                                              | CUISINE_FILTERS_TYPE
-                                              | DIET_FILTERS_TYPE
-                                            )
-                                          ],
-                                        ],
-                                      });
-                                    } else {
-                                      setTmpFilters({
-                                        ...tmpFilters,
-                                        [entity]: tmpFilters[
-                                          entity as keyof FilterType
-                                        ].filter(
-                                          (value) =>
-                                            value !==
-                                            filtersByEntity[
-                                              entity as keyof typeof filtersByEntity
-                                            ][
-                                              filter as keyof (
-                                                | CUISINE_FILTERS_TYPE
-                                                | DIET_FILTERS_TYPE
-                                              )
-                                            ]
-                                        ),
-                                      });
-                                    }
-                                  }}
                                   className="w-4 h-4 bg-gray-100 border-gray-300 rounded dark:bg-gray-600 dark:border-gray-500"
                                 />
                                 <label className="text-gray-700 block px-4 py-2 text-sm">
@@ -215,9 +215,19 @@ export const RandomRecipes = () => {
               );
             })}
           </div>
-          <div className="w-3/4 flex flex-wrap justify-between">
-            <button onClick={handleClear} className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full">Clear</button>
-            <button onClick={handleApply} className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full">Apply</button>
+          <div className="w-1/2 flex flex-wrap justify-between">
+            <button
+              onClick={handleClear}
+              className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full"
+            >
+              Clear
+            </button>
+            <button
+              onClick={handleApply}
+              className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full"
+            >
+              Apply
+            </button>
           </div>
         </div>
         <button
