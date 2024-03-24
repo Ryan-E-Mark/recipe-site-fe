@@ -22,10 +22,16 @@ const initialFilterState = {
 
 type FilterType = Pick<SearchFilters, "cuisine" | "diet">;
 
+type RandomSearchResultType = {
+  id: number;
+  title: string;
+  image: string;
+}[];
+
 export const RandomRecipes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState<string[]>([]);
-  const [searchResults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState<RandomSearchResultType>();
   const [isDropdownOpen, setIsDropdownOpen] = useState({
     cuisine: false,
     diet: false,
@@ -56,7 +62,7 @@ export const RandomRecipes = () => {
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random",
       params: {
         tags: searchParams,
-        number: "1",
+        number: "3",
       },
       headers: {
         "X-RapidAPI-Key": process.env.REACT_APP_RECIPE_SEARCH_API_KEY,
@@ -69,8 +75,8 @@ export const RandomRecipes = () => {
   const handleRandomSearch = async () => {
     try {
       setIsLoading(true);
-      //   const response = await axios.request(options);
-      //   setSearchResults(response.data.recipes[0]);
+      const response = await axios.request(options);
+      setSearchResults(response.data.recipes);
     } catch (err) {
       console.error(err);
     } finally {
@@ -122,9 +128,7 @@ export const RandomRecipes = () => {
                   {isDropdownOpen[
                     entity as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE)
                   ] && (
-                    <div
-                      className="py-2 my-2 bg-white drop-shadow-lg rounded-lg overflow-y-scroll h-36 absolute z-10"
-                    >
+                    <div className="py-2 my-2 w-52 bg-white drop-shadow-lg rounded-lg overflow-y-scroll h-36 absolute z-10">
                       <ul>
                         {Object.keys(
                           filtersByEntity[
@@ -237,11 +241,23 @@ export const RandomRecipes = () => {
           Search
         </button>
       </div>
-      {true && (
+      {isLoading && (
         <div className="flex h-full justify-center items-center">
           <Loader />
         </div>
       )}
+      <div className="flex-col">
+      {!isLoading &&
+        searchResults?.length &&
+        searchResults?.map((result) => {
+          return (
+            <div key={result.id} className="flex-col flex items-center justify-center">
+              <img alt="recipe-thumbnail" src={result.image} className="hover:cursor-pointer rounded-lg"/>
+              <h2 className="hover:cursor-pointer hover:underline font-bold text-xl">{result.title}</h2>
+            </div>
+          );
+        })}
+        </div>
     </div>
   );
 };
