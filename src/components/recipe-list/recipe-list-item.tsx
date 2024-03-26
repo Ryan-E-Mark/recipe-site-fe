@@ -23,12 +23,11 @@ export const RecipeListItem: FC<RecipeListItemProps> = ({
   };
 
   return (
-    <div className="flex flex-col flex-wrap pb-3 items-center justify-between gap-y-8">
-      <div className="flex flex-col flex-wrap items-center w-full gap-y-2">
+    <div className="flex flex-col flex-wrap pb-3 items-center justify-between gap-y-4 border border-gray-50 rounded-lg shadow">
         <img
           alt="recipe-thumbnail"
           src={image}
-          className="w-full h-60 rounded-sm hover:cursor-pointer"
+          className="w-full h-60 rounded-lg hover:cursor-pointer"
           onClick={handleOnClick}
         />
         <div className="hover:cursor-pointer hover:underline" onClick={handleOnClick}>
@@ -38,7 +37,6 @@ export const RecipeListItem: FC<RecipeListItemProps> = ({
           <img alt="spoon&fork" src={clock} className="w-6 h-6 p-1" />
           <span>- {getCookingTimeFormatted(cookingTime)}</span>
         </div>
-      </div>
     </div>
   );
 };

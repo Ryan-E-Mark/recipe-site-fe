@@ -12,9 +12,7 @@ import {
 } from "../components/recipe-list/filter-helpers";
 import { getStringCapitalized } from "../utils/get-string-capitalized";
 import { getStringFormatted } from "../utils/get-string-formatted";
-import { useNavigate } from "react-router-dom";
-
-const filterEntities = ["cuisine", "diet"];
+import { RecipeListItem } from "../components/recipe-list/recipe-list-item";
 
 const initialFilterState = {
   cuisine: [],
@@ -27,6 +25,7 @@ type RandomSearchResultType = {
   id: number;
   title: string;
   image: string;
+  readyInMinutes: number;
 }[];
 
 export const RandomRecipes = () => {
@@ -38,7 +37,6 @@ export const RandomRecipes = () => {
     diet: false,
   });
   const [tmpFilters, setTmpFilters] = useState<FilterType>(initialFilterState);
-  const navigate = useNavigate();
 
   const filtersByEntity: {
     cuisine: CUISINE_FILTERS_TYPE;
@@ -64,7 +62,7 @@ export const RandomRecipes = () => {
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random",
       params: {
         tags: searchParams,
-        number: "4",
+        number: "12",
       },
       headers: {
         "X-RapidAPI-Key": process.env.REACT_APP_RECIPE_SEARCH_API_KEY,
@@ -85,15 +83,12 @@ export const RandomRecipes = () => {
       setIsLoading(false);
     }
   };
-
-  const handleClick = (id: number) => {
-    navigate(`/recipes/${id}`, { state: { id: id } });
-  };
+  console.log(searchResults);
 
   return (
     <div className="h-screen grid">
       <div className="flex flex-col justify-center items-center self-start">
-        <div className="bg-gray-200 rounded-md flex justify-start gap-x-12 px-4">
+        <div className="bg-gray-200 rounded-md flex justify-start gap-x-12 px-4 mt-8">
           <div className="flex flex-col p-2 gap-y-4 items-center">
             <h1 className="text-lg font-bold">Search for random recipes</h1>
             <button
@@ -108,7 +103,7 @@ export const RandomRecipes = () => {
             <div className="grid grid-cols-2 gap-x-4">
               {Object.keys(filtersByEntity).map((entity) => {
                 return (
-                  <div className="w-auto">
+                  <div className="w-auto" key={entity}>
                     <button
                       className="inline-flex w-52 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                       id="menu-button"
@@ -259,27 +254,15 @@ export const RandomRecipes = () => {
           <Loader />
         </div>
       )}
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-4 gap-8 mx-4 my-6">
         {!isLoading &&
           searchResults?.length &&
           searchResults?.map((result) => {
             return (
               <div
                 key={result.id}
-                className="flex-col flex items-center justify-center"
               >
-                <img
-                  alt="recipe-thumbnail"
-                  src={result.image}
-                  className="hover:cursor-pointer rounded-lg"
-                  onClick={() => handleClick(result?.id)}
-                />
-                <h2
-                  className="hover:cursor-pointer hover:underline font-bold text-xl"
-                  onClick={() => handleClick(result?.id)}
-                >
-                  {result.title}
-                </h2>
+                <RecipeListItem id={result.id} title={result.title} image={result.image} cookingTime={result.readyInMinutes}/>
               </div>
             );
           })}

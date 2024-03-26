@@ -69,14 +69,13 @@ export const SearchByIngredientResults: FC = () => {
           <div className="grid grid-cols-4 gap-8 my-4 mx-4">
           {searchResults.map((recipe, idx) => {
             return (
-
               <div
-                className="flex flex-col justify-center items-center gap-y-2"
+                className="flex flex-col justify-center items-center gap-y-2 shadow border border-gray-50 rounded-lg"
               >
                 <img
                   alt="recipe-thumbnail"
                   src={recipe.image}
-                  className="w-full hover:cursor-pointer rounded-md filter-none"
+                  className="w-full hover:cursor-pointer rounded-lg filter-none"
                   onClick={() => handleOnClick(recipe.id)}
                 />
                 <h3
