@@ -49,7 +49,7 @@ export const SimilarRecipes: FC<SimilarRecipesProps> = ({ recipeId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center m-10 p-4 bg-gray-100 rounded-md">
+    <div className="w-3/5 flex flex-col items-center m-10 p-4 bg-gray-100 rounded-md">
       <h3 className="font-bold text-xl underline">Similar Recipes</h3>
       {isLoading && (
         <Loader />

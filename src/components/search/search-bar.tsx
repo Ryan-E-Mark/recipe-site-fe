@@ -17,7 +17,7 @@ export const SearchBar: FC = () => {
           id="search-bar"
           name="search"
           placeholder="Search recipes..."
-          className="w-auto h-full border-2 rounded-lg focus:outline-lime-200 focus:border-lime-200 focus:bg-gray-50"
+          className="w-auto h-full bg-white border-2 rounded-lg focus:outline-lime-200 focus:border-lime-200 focus:bg-gray-50"
         />
       </form>
   );

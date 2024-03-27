@@ -49,10 +49,10 @@ export const IndividualRecipeDetails = () => {
         </div>
       )}
       {!isLoading && (
-        <>
+        <div className="flex flex-col items-center">
           <RecipeDetails recipeDetails={recipeDetails} />
           <SimilarRecipes recipeId={recipeId} />
-        </>
+        </div>
       )}
     </div>
   );

@@ -3,12 +3,13 @@ import { Divider } from "../components/common/divider";
 import { getStringCapitalized } from "../utils/get-string-capitalized";
 
 export const SearchByIngredients = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const handleOnClick = (ingredient: string) => {
-        navigate(`/recipe-by-ingredient-results`, { state: { ingredient: ingredient } })
-    }
-
+  const handleOnClick = (ingredient: string) => {
+    navigate(`/recipe-by-ingredient-results`, {
+      state: { ingredient: ingredient },
+    });
+  };
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -21,11 +22,12 @@ export const SearchByIngredients = () => {
             {INGREDIENTS.map((ingr, idx) => {
               return (
                 <div key={idx} className="px-1">
-                  <div 
+                  <a
                     className="px-2 border border-lime-200 hover:bg-lime-200 hover:cursor-pointer hover:font-bold"
+                    href={`#${ingr.letter}`}
                   >
-                    <a href={`#${ingr.letter}`}>{ingr.letter}</a>
-                  </div>
+                    {ingr.letter}
+                  </a>
                 </div>
               );
             })}
@@ -48,17 +50,15 @@ export const SearchByIngredients = () => {
                             className="px-4 hover:underline hover:cursor-pointer"
                             onClick={() => handleOnClick(individual_ingredient)}
                           >
-                            <p>
-                              {getStringCapitalized(individual_ingredient)}
-                            </p>
+                            <p>{getStringCapitalized(individual_ingredient)}</p>
                           </div>
                         );
                       })}
                   </div>
                 </div>
-              )};
+              );
             }
-        )}
+          })}
         </div>
       </div>
     </div>
