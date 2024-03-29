@@ -3,6 +3,10 @@ export type SearchResults = {
   image: string;
   title: string;
   readyInMinutes: number
+  glutenFree: boolean
+  vegan: boolean
+  vegetarian: boolean
+  dairyFree: boolean
 }[];
 
 export type SearchFilters = {

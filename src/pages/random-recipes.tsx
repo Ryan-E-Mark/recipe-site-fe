@@ -26,6 +26,10 @@ type RandomSearchResultType = {
   title: string;
   image: string;
   readyInMinutes: number;
+  glutenFree: boolean
+  vegan: boolean
+  vegetarian: boolean
+  dairyFree: boolean
 }[];
 
 export const RandomRecipes = () => {
@@ -83,7 +87,6 @@ export const RandomRecipes = () => {
       setIsLoading(false);
     }
   };
-  console.log(searchResults);
 
   return (
     <div className="h-screen grid">
@@ -262,7 +265,7 @@ export const RandomRecipes = () => {
               <div
                 key={result.id}
               >
-                <RecipeListItem id={result.id} title={result.title} image={result.image} cookingTime={result.readyInMinutes}/>
+                <RecipeListItem id={result.id} title={result.title} image={result.image} cookingTime={result.readyInMinutes} glutenFree={result.glutenFree} vegan={result.vegan} vegetarian={result.vegetarian} dairyFree={result.dairyFree}/>
               </div>
             );
           })}

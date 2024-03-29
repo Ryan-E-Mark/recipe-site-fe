@@ -37,6 +37,10 @@ export const RecipeList: FC<RecipeListProps> = ({
                     image={recipe.image}
                     title={recipe.title}
                     cookingTime={recipe.readyInMinutes}
+                    glutenFree={recipe.glutenFree}
+                    vegan={recipe.vegan}
+                    vegetarian={recipe.vegetarian}
+                    dairyFree={recipe.dairyFree}
                   />
                 );
               })}
