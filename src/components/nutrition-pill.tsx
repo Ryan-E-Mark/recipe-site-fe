@@ -24,10 +24,10 @@ export const NutritionPill: FC<NutritionPillProps> = ({ glutenFree, vegan, veget
     }
 
     return (
-        <div className="absolute z-10">
+        <div className="absolute z-10 flex self-start">
         {nutritionLabels.map(label => {
             return (
-                <div className="rounded-lg background-gray-50">
+                <div className="rounded-lg background-gray-50 w-20 h-10 p-1">
                     <p>{label}</p>
                 </div>
             )
