@@ -26,10 +26,10 @@ type RandomSearchResultType = {
   title: string;
   image: string;
   readyInMinutes: number;
-  glutenFree: boolean
-  vegan: boolean
-  vegetarian: boolean
-  dairyFree: boolean
+  glutenFree: boolean;
+  vegan: boolean;
+  vegetarian: boolean;
+  dairyFree: boolean;
 }[];
 
 export const RandomRecipes = () => {
@@ -96,7 +96,7 @@ export const RandomRecipes = () => {
             <h1 className="text-lg font-bold">Search for random recipes</h1>
             <button
               onClick={handleRandomSearch}
-              className="w-3/4 bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm"
+              className="w-3/4 bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm font-semibold"
             >
               Search
             </button>
@@ -238,13 +238,13 @@ export const RandomRecipes = () => {
             <div className="w-1/2 flex flex-wrap justify-between">
               <button
                 onClick={handleClear}
-                className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm"
+                className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm font-semibold"
               >
                 Clear
               </button>
               <button
                 onClick={handleApply}
-                className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm"
+                className="bg-white hover:bg-gray-50 text-black py-1 px-4 rounded-full shadow-sm font-semibold"
               >
                 Apply
               </button>
@@ -262,10 +262,17 @@ export const RandomRecipes = () => {
           searchResults?.length &&
           searchResults?.map((result) => {
             return (
-              <div
-                key={result.id}
-              >
-                <RecipeListItem id={result.id} title={result.title} image={result.image} cookingTime={result.readyInMinutes} glutenFree={result.glutenFree} vegan={result.vegan} vegetarian={result.vegetarian} dairyFree={result.dairyFree}/>
+              <div key={result.id}>
+                <RecipeListItem
+                  id={result.id}
+                  title={result.title}
+                  image={result.image}
+                  cookingTime={result.readyInMinutes}
+                  glutenFree={result.glutenFree}
+                  vegan={result.vegan}
+                  vegetarian={result.vegetarian}
+                  dairyFree={result.dairyFree}
+                />
               </div>
             );
           })}
