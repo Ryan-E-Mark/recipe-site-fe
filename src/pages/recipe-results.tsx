@@ -53,7 +53,7 @@ export const RecipeResults = () => {
     }
   }, [searchTerm, fetchRecipes]);
 
-  console.log(searchResults)
+  console.log(searchResults);
 
   const pageEnd = page * 12;
   const pageStart = pageEnd - 12;
@@ -73,9 +73,6 @@ export const RecipeResults = () => {
           setPage={setPage}
           resultsTotal={searchResults.length}
         />
-        <a href="https://www.flaticon.com/free-icons/clock" title="clock icons">
-          Clock icons created by dmitri13 - Flaticon
-        </a>
       </div>
     </div>
   );
