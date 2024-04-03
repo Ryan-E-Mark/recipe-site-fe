@@ -56,7 +56,7 @@ export const LunchSuggested: FC = () => {
           <Loader />
         </div>
       )}
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         {!isLoading &&
           lunchRecipes?.length &&
           lunchRecipes.map((recipe, idx) => {

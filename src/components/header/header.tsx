@@ -4,7 +4,7 @@ import { SearchBar } from "../search/search-bar";
 
 export const Header = () => {
   return (
-    <div className="flex flex-row justify-between flex-wrap h-full px-4 border-b-2 border-red-200 sticky-top-0">
+    <div className="flex flex-col items-center md:flex-row md:justify-between flex-wrap h-full px-4 border-b-2 border-red-200">
       <span>
         <h2 className="text-4xl text-lime-200 font-bold my-2">TastyBites</h2>
       </span>
