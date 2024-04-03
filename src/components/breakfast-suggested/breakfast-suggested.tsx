@@ -44,7 +44,7 @@ export const BreakfastSuggested: FC = () => {
   }, [options]);
 
   useEffect(() => {
-    // fetchBreakfastRecipes();
+    fetchBreakfastRecipes();
   }, [fetchBreakfastRecipes]);
 
   return (

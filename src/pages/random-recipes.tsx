@@ -89,7 +89,7 @@ export const RandomRecipes = () => {
   };
 
   return (
-    <div className="h-screen grid">
+    <div className="h-full grid">
       <div className="flex flex-col justify-center items-center self-start">
         <div className="bg-gray-200 rounded-md flex justify-start gap-x-12 px-4 mt-8">
           <div className="flex flex-col p-2 gap-y-4 items-center">

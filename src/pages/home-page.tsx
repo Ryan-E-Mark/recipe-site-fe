@@ -5,7 +5,7 @@ import { LunchSuggested } from "../components/lunch-suggested/lunch-suggested";
 
 export const HomePage = () => {
   return (
-    <div className="my-4">
+    <div className="my-4 h-full">
       <BreakfastSuggested />
       <div className="flex justify-center py-8 mx-8">
       <Divider />

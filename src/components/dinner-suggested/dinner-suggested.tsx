@@ -45,7 +45,7 @@ export const DinnerSuggested: FC = () => {
   }, [options]);
 
   useEffect(() => {
-    // fetchDinnerRecipes();
+    fetchDinnerRecipes();
   }, [fetchDinnerRecipes]);
 
   return (
