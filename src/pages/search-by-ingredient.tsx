@@ -12,7 +12,7 @@ export const SearchByIngredients = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-1/4 md:w-full flex flex-col items-center">
       <div className="w-3/4 flex flex-col items-center">
         <div className="flex flex-col mt-12">
           <h3 className="text-lg font-bold">
