@@ -91,7 +91,7 @@ export const RandomRecipes = () => {
   return (
     <div className="h-full grid">
       <div className="flex flex-col justify-center items-center self-start">
-        <div className="bg-gray-200 rounded-md flex justify-start gap-x-12 px-4 mt-8">
+        <div className="bg-gray-200 rounded-md flex flex-col md:flex-row justify-start gap-x-12 px-4 mt-8">
           <div className="flex flex-col p-2 gap-y-4 items-center">
             <h1 className="text-lg font-bold">Search for random recipes</h1>
             <button
@@ -108,7 +108,7 @@ export const RandomRecipes = () => {
                 return (
                   <div className="w-auto" key={entity}>
                     <button
-                      className="inline-flex w-52 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      className="inline-flex w-36 md:w-52 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                       id="menu-button"
                       aria-expanded="true"
                       aria-haspopup="true"
@@ -142,7 +142,7 @@ export const RandomRecipes = () => {
                     {isDropdownOpen[
                       entity as keyof (CUISINE_FILTERS_TYPE | DIET_FILTERS_TYPE)
                     ] && (
-                      <div className="py-2 my-2 w-52 bg-white drop-shadow-lg rounded-lg overflow-y-scroll h-36 absolute z-10">
+                      <div className="py-2 my-2 w-36 md:w-52 bg-white drop-shadow-lg rounded-lg overflow-y-scroll h-36 absolute z-10">
                         <ul>
                           {Object.keys(
                             filtersByEntity[
@@ -257,7 +257,7 @@ export const RandomRecipes = () => {
           <Loader />
         </div>
       )}
-      <div className="grid grid-cols-4 gap-8 mx-4 my-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mx-4 my-6">
         {!isLoading &&
           searchResults?.length &&
           searchResults?.map((result) => {
