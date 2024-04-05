@@ -12,13 +12,13 @@ export const SearchByIngredients = () => {
   };
 
   return (
-    <div className="w-1/4 md:w-full flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="w-3/4 flex flex-col items-center">
         <div className="flex flex-col mt-12">
           <h3 className="text-lg font-bold">
             Find an ingredient by it's first letter
           </h3>
-          <div className="flex">
+          <div className="flex flex-wrap">
             {INGREDIENTS.map((ingr, idx) => {
               return (
                 <div key={idx} className="px-1">
@@ -40,7 +40,7 @@ export const SearchByIngredients = () => {
                 <div key={idx} id={ingr.letter} className="my-4">
                   <h3 className="text-2xl font-bold">{ingr.letter}</h3>
                   <Divider />
-                  <div className="flex">
+                  <div className="flex flex-wrap">
                     {ingr.ingredients
                       .sort()
                       .map((individual_ingredient, idx) => {
