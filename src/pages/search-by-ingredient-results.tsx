@@ -43,7 +43,6 @@ export const SearchByIngredientResults: FC = () => {
       setIsLoading(true);
       const response = await axios.request(options);
       setSearchResults(response.data);
-      console.log(response);
     } catch (err) {
       console.error(err);
     } finally {

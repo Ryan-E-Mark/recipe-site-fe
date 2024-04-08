@@ -54,8 +54,6 @@ export const RecipeResults = () => {
     }
   }, [searchTerm, fetchRecipes]);
 
-  console.log(searchResults);
-
   const pageEnd = page * 12;
   const pageStart = pageEnd - 12;
 
