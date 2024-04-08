@@ -67,7 +67,7 @@ export const BreakfastSuggested: FC = () => {
                 <img
                   alt="recipe-thumbnail"
                   src={recipe.image}
-                  className=" hover:cursor-pointer rounded-sm"
+                  className=" hover:cursor-pointer rounded-lg"
                   onClick={() => handleOnClick(recipe.id)}
                 />
                 <h3

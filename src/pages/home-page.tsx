@@ -1,20 +1,26 @@
 import { BreakfastSuggested } from "../components/breakfast-suggested/breakfast-suggested";
 import { Divider } from "../components/common/divider";
 import { DinnerSuggested } from "../components/dinner-suggested/dinner-suggested";
+import { Footer } from "../components/footer/footer";
 import { LunchSuggested } from "../components/lunch-suggested/lunch-suggested";
 
 export const HomePage = () => {
   return (
-    <div className="my-4 h-full">
-      <BreakfastSuggested />
-      <div className="flex justify-center py-8 mx-8">
-      <Divider />
+    <>
+      <div className="my-4 h-full">
+        <BreakfastSuggested />
+        <div className="flex justify-center py-8 mx-8">
+          <Divider />
+        </div>
+        <LunchSuggested />
+        <div className="flex justify-center py-8 mx-8">
+          <Divider />
+        </div>
+        <div className="flex justify-center py-8 mx-8">
+          <DinnerSuggested />
+        </div>
       </div>
-      <LunchSuggested />
-      <div className="flex justify-center py-8 mx-8">
-      <Divider />
-      </div>
-      <DinnerSuggested />
-    </div>
+      <Footer />
+    </>
   );
 };

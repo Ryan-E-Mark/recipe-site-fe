@@ -4,6 +4,7 @@ import { ResultsPagePagination } from "../components/recipe-list/results-page-pa
 import { SearchResults } from "../components/recipe-list/types";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Footer } from "../components/footer/footer";
 
 export const MAX_NUMBER_OF_RESULTS = 100;
 
@@ -73,6 +74,9 @@ export const RecipeResults = () => {
           setPage={setPage}
           resultsTotal={searchResults.length}
         />
+        <div className="w-full mt-4">
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import { Header } from "./components/header/header";
 import { RandomRecipes } from "./pages/random-recipes";
 import { SearchByIngredients } from "./pages/search-by-ingredient";
 import { SearchByIngredientResults } from "./pages/search-by-ingredient-results";
-import { Footer } from "./components/footer/footer";
 
 export const App = () => {
   return (
@@ -27,7 +26,6 @@ export const App = () => {
           element={<SearchByIngredientResults />}
         />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 };
